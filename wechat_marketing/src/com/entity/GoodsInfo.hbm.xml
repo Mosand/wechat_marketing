@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+     <class name="com.entity.GoodsInfo" table="goods_info" entity-name="goods_info">
+           <id name="goods_id" column="goods_id">
+                <generator class="assigned"></generator>
+           </id>
+           <property name="goods_name" column="goods_name"></property>
+           <property name="price" column="price"></property>
+           <property name="ticheng" column="ticheng"></property>
+           <property name="reward" column="reward"></property>
+           <property name="reward_num" column="reward_num"></property>
+           <property name="admin" column="admin"></property>
+           <property name="admin_num" column="admin_num"></property>
+           <property name="goods_image" column="goods_image"></property>
+     </class>
+</hibernate-mapping>

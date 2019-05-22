@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+     <class name="com.entity.Purchase" table="purchase" entity-name="purchase">
+           <id name="deal_num" column="deal_num">
+                <generator class="assigned"></generator>
+           </id>
+           <property name="id1" column="id1"></property>
+           <property name="goods_id" column="goods_id"></property>
+           <property name="buy_num" column="buy_num"></property>
+           <property name="spend" column="spend"></property>
+           <property name="time" column="time"></property>
+           <property name="state" column="state"></property>
+           <property name="avatar_url" column="avatar_url"></property>
+           <property name="goods_image" column="goods_image"></property>
+     </class>
+</hibernate-mapping>
