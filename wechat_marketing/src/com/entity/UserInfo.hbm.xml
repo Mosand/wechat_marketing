@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+     <class name="com.entity.UserInfo" table="user_info" entity-name="user_info">
+           <id name="id1" column="id1">
+                <generator class="assigned"></generator>
+           </id>
+           <property name="id2" column="id2"></property>
+           <property name="id3" column="id3"></property>
+           <property name="id4" column="id4"></property>
+           <property name="id5" column="id5"></property>
+           <property name="id6" column="id6"></property>
+           <property name="id7" column="id7"></property>
+           <property name="erweima" column="erweima"></property>
+         
+     </class>
+</hibernate-mapping>

@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.Purchase;
-import com.opensymphony.xwork2.ActionContext;
 import com.service.PurchaseService;
 
 public class PurchaseAction {
@@ -31,7 +30,7 @@ public class PurchaseAction {
 	private String deal_num;
 	
 	private PurchaseService purchaseService;
-	//private List<Purchase> lists = new ArrayList<Purchase>();
+	private List<Purchase> lists = new ArrayList<Purchase>();
 	
 	private InputStream inputStream; //这个名字和struts.xml中对应，不能写错  
 	  
@@ -124,26 +123,26 @@ public class PurchaseAction {
 	}
 	
 	//这个方法必须写上
-//    public List<Purchase> getLists() {
-//        return lists;
-//    }
-//    public void setLists(List<Purchase> lists) {
-//        this.lists = lists;
-//    }
+    public List<Purchase> getLists() {
+        return lists;
+    }
+    public void setLists(List<Purchase> lists) {
+        this.lists = lists;
+    }
 	
-//    public String getState2(){
-//        System.out.println("传统的ajax");
-//        HttpServletResponse response = ServletActionContext.getResponse();
-//        try {
-//            PrintWriter out = response.getWriter();
-//            out.println("{\"success\":\"true\",\"type\":\"succ\"}");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
+    public String getState2(){
+        System.out.println("传统的ajax");
+        HttpServletResponse response = ServletActionContext.getResponse();
+        try {
+            PrintWriter out = response.getWriter();
+            out.println("{\"success\":\"true\",\"type\":\"succ\"}");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 	
-    public String saveDealNum() throws UnsupportedEncodingException{
+    public String saveDealNum() throws UnsupportedEncodingException{ //根据id1和goods_id和时间生成流水号
     	System.out.println("action.saveDealNum方法执行");
     	Purchase purchase = new Purchase();
     	Date date=new Date();
@@ -168,8 +167,21 @@ public class PurchaseAction {
 		return null;
     }
     
-//	public String findDeal(){
-//		
-//	}
+	public String findDeal() throws UnsupportedEncodingException{//根据id1来查询id1的全部订单
+		System.out.println("action.findDeal方法执行");
+		String result = purchaseService.findDeal(id1);
+		if(result == com.service.impl.PurchaseServiceImpl.SUCCESS){
+			lists = purchaseService.findOneDeal(id1);
+			System.out.println("lists"+lists);
+			return "findSuccess";
+		}else if(result == com.service.impl.PurchaseServiceImpl.FAIL){
+			inputStream = new ByteArrayInputStream("findfail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("查询订单失败，没有此订单");
+			return "findFail";
+		}
+		return null;
+		
+	}
     
 }

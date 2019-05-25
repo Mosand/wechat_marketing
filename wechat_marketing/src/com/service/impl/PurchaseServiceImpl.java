@@ -1,6 +1,9 @@
 package com.service.impl;
 
+import java.util.List;
+
 import com.dao.PurchaseDao;
+import com.entity.Purchase;
 import com.service.PurchaseService;
 
 public class PurchaseServiceImpl implements PurchaseService{
@@ -26,4 +29,21 @@ public class PurchaseServiceImpl implements PurchaseService{
 		
 	}
 	
+	@Override
+	public String findDeal(String id1){
+		
+		List<Purchase> purchaselist = purchaseDao.findOneDeal(id1);
+		if(purchaselist==null){
+			return FAIL;
+		}else
+			return SUCCESS;
+		
+	}
+	
+	@Override
+	public List<Purchase> findOneDeal(String id1) {
+		// TODO Auto-generated method stub
+		
+		return purchaseDao.findOneDeal(id1);
+	}
 }

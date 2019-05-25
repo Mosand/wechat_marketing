@@ -17,6 +17,11 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.service.GoodsService;
 
 public class GoodsAction extends ActionSupport{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -123172674311046432L;
+
 	//private String goods_id;
 	private GoodsService goodsService;
 	

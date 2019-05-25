@@ -41,6 +41,7 @@
 			<list>
 				<value>com/entity/GoodsInfo.hbm.xml</value>
 				<value>com/entity/Purchase.hbm.xml</value> 
+				<value>com/entity/Address.hbm.xml</value> 
 			</list>
 		</property>
 	</bean>
@@ -52,6 +53,9 @@
 	<bean id="purchaseAction" class="com.action.PurchaseAction" scope="prototype">
 		<property name="purchaseService" ref="purchaseService"></property>
 	</bean>
+	<bean id="addressAction" class="com.action.AddressAction" scope="prototype">
+		<property name="addressService" ref="addressService"></property>
+	</bean>
 	
 	<!-- 配置业务层service --> 
 	<bean id="goodsService" class="com.service.impl.GoodsServiceImpl">
@@ -60,12 +64,18 @@
 	<bean id="purchaseService" class="com.service.impl.PurchaseServiceImpl">
 		<property name="purchaseDao" ref="purchaseDao"></property>
 	</bean>
+	<bean id="addressService" class="com.service.impl.AddressServiceImpl">
+		<property name="addressDao" ref="addressDao"></property>
+	</bean>
 	
 	<!-- 配置dao -->
 	<bean id="goodsDao" class="com.dao.impl.GoodsDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="purchaseDao" class="com.dao.impl.PurchaseDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="addressDao" class="com.dao.impl.AddressDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	

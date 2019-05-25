@@ -1,17 +1,20 @@
 package com.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.dao.PurchaseDao;
+import com.entity.Purchase;
 
 public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 
 	@Override
 	public String makeDeal(String id1,String goods_id,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num){
 		
-		deal_num = id1 + goods_id + buy_num + spend + time + state + avatar_url+goods_image;
+		deal_num = id1 + goods_id +  time ;
 		return deal_num;
 	}
 	
@@ -37,6 +40,26 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 			return "success";
 		}else
 			return "fail";
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Purchase> findOneDeal(String id1){
+		String hql="";
+		if(id1==null||id1.equals(""))
+			   return null;
+		hql = "from purchase p where p.id1 = ? ";
+		List<Purchase> purchaselist=this.getHibernateTemplate().find(hql,id1);
+		if(purchaselist.size()!=0){
+			System.out.println("≤È—Ø≥…π¶");
+			System.out.println("id1 is "+ id1);
+			return purchaselist;
+		}else if(purchaselist.size()==0){
+			return null;
+		}
+		
+		return null;
 		
 	}
 	
