@@ -19,13 +19,13 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 	}
 	
 	@Override
-	public String saveDeal(String id1,String goods_id,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num){
+	public String saveDeal(String id1,String goods_id,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num,int addressID){
 		
 		deal_num = this.makeDeal(id1, goods_id, buy_num, spend, time, state, avatar_url, goods_image, deal_num);		
 		Session se =this.getSession();
 		String hql="";
 		
-		hql = "insert into purchase(id1, goods_id, buy_num, spend, time, state, avatar_url, goods_image, deal_num) values(?,?,?,?,?,?,?,?,?)";
+		hql = "insert into purchase(id1, goods_id, buy_num, spend, time, state, avatar_url, goods_image, deal_num,addressID) values(?,?,?,?,?,?,?,?,?,?)";
 		Query query= se.createSQLQuery(hql);
 		query.setString(0, id1);
 		query.setString(1, goods_id);
@@ -36,6 +36,7 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 		query.setString(6, avatar_url);
 		query.setString(7, goods_image);
 		query.setString(8, deal_num);
+		query.setInteger(9, addressID);
 		if(query.executeUpdate() == 1){
 			return "success";
 		}else
@@ -58,7 +59,7 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 		}else if(purchaselist.size()==0){
 			return null;
 		}
-		
+		 
 		return null;
 		
 	}

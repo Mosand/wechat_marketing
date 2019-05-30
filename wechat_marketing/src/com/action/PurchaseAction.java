@@ -28,6 +28,7 @@ public class PurchaseAction {
 	private String avatar_url;
 	private String goods_image;
 	private String deal_num;
+	private int addressID;
 	
 	private PurchaseService purchaseService;
 	private List<Purchase> lists = new ArrayList<Purchase>();
@@ -122,6 +123,16 @@ public class PurchaseAction {
 		this.purchaseService = purchaseService;
 	}
 	
+	
+	
+	public int getAddressID() {
+		return addressID;
+	}
+
+	public void setAddressID(int addressID) {
+		this.addressID = addressID;
+	}
+
 	//这个方法必须写上
     public List<Purchase> getLists() {
         return lists;
@@ -151,7 +162,7 @@ public class PurchaseAction {
 		time = time1.toString();
 		purchase.setTime(time);
     	
-		String result = purchaseService.saveDeal(id1,goods_id,buy_num,spend,time,state,avatar_url,goods_image,deal_num);
+		String result = purchaseService.saveDeal(id1,goods_id,buy_num,spend,time,state,avatar_url,goods_image,deal_num,addressID);
 		if(result.equals(com.service.impl.PurchaseServiceImpl.SUCCESS)){
 			 inputStream = new ByteArrayInputStream("success"  
 	                    .getBytes("UTF-8"));   
@@ -183,5 +194,7 @@ public class PurchaseAction {
 		return null;
 		
 	}
+	
+	
     
 }

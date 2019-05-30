@@ -30,4 +30,40 @@ public class GoodsServiceImpl implements GoodsService{
 		// TODO Auto-generated method stub
 		return goodsDao.findGoods();
 	}
+	
+	@Override
+	public String updateGoods(int goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods){
+		
+		String result = goodsDao.update(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods);
+		if(result == "success"){
+			return SUCCESS;
+		}else if(result.equals("fail")){
+			return FAIL;
+		}
+			return null;
+	}
+	
+	@Override
+	public String deleteGoods(int goods_id){
+		
+		String result = goodsDao.delete(goods_id);
+		if(result == "success"){
+			return SUCCESS;
+		}else if(result.equals("fail")){
+			return FAIL;
+		}
+		return null;
+	}
+	
+	@Override
+	public String addGoods(String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods){
+		
+		String result = goodsDao.add(goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods);
+		if(result == "success"){
+			return SUCCESS;
+		}else if(result.equals("fail")){
+			return FAIL;
+		}
+			return null;
+	}
 }

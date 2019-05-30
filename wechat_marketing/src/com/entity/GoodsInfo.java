@@ -11,11 +11,12 @@ package com.entity;
  * admin：Admin奖金
  * admin_num：Admin达标线
  * goods_image:商品图片
+ * describe_goods:商品描述
  */
 
 public class GoodsInfo {
 	
-	private String goods_id;
+	private int goods_id;
 	private String goods_name;
 	private float price;
 	private float ticheng;
@@ -24,8 +25,9 @@ public class GoodsInfo {
 	private float admin;
 	private int admin_num;
 	private String goods_image;
+	private String describe_goods;
 	
-	public GoodsInfo(String goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image){
+	public GoodsInfo(int goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods){
 		super();
 		this.goods_id = goods_id;
 		this.goods_name = goods_name;
@@ -36,19 +38,20 @@ public class GoodsInfo {
 		this.admin = admin;
 		this.admin_num = admin_num;
 		this.goods_image = goods_image;
+		this.describe_goods = describe_goods;
 	}
 	
-	public GoodsInfo(String goods_id){
+	public GoodsInfo(int goods_id){
 		super();
 		this.goods_id=goods_id;
 	}
 	public GoodsInfo(){
 	}
 	
-	public String getGoods_id() {
+	public int getGoods_id() {
 		return goods_id;
 	}
-	public void setGoods_id(String goods_id) {
+	public void setGoods_id(int goods_id) {
 		this.goods_id = goods_id;
 	}
 	
@@ -107,6 +110,15 @@ public class GoodsInfo {
 	public void setGoods_image(String goods_image) {
 		this.goods_image = goods_image;
 	}
+
+	public String getDescribe_goods() {
+		return describe_goods;
+	}
+
+	public void setDescribe_goods(String describe_goods) {
+		this.describe_goods = describe_goods;
+	}
+
 	
 	
 }

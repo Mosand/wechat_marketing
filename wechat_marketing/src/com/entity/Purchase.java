@@ -26,6 +26,7 @@ public class Purchase {
 	private String avatar_url;
 	private String goods_image;
 	private String deal_num;
+	private int addressID;
 	
 	public Purchase(){
 		
@@ -115,6 +116,14 @@ public class Purchase {
 
 	public void setDeal_num(String deal_num) {
 		this.deal_num = deal_num;
+	}
+
+	public int getAddressID() {
+		return addressID;
+	}
+
+	public void setAddressID(int addressID) {
+		this.addressID = addressID;
 	}
 	
 	
