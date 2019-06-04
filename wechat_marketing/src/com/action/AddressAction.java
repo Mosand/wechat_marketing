@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.Address;
+import com.opensymphony.xwork2.ActionContext;
 import com.service.AddressService;
 
 public class AddressAction {
@@ -110,6 +111,7 @@ public class AddressAction {
 		if(result == com.service.impl.AddressServiceImpl.SUCCESS){
 			lists = addressService.findOneAddress(id1);
 			System.out.println("lists"+lists);
+			ActionContext.getContext().put("user_id", id1);
 			return "findSuccess";
 		}else if(result == com.service.impl.AddressServiceImpl.FAIL){
 			inputStream = new ByteArrayInputStream("findfail"  
@@ -126,7 +128,8 @@ public class AddressAction {
 		String result = addressService.saveAddress(id1,region,tel,name,first_choice,address);
 		if(result.equals(com.service.impl.AddressServiceImpl.SUCCESS)){
 			 inputStream = new ByteArrayInputStream("success"  
-	                    .getBytes("UTF-8"));   
+	                    .getBytes("UTF-8"));
+			 ActionContext.getContext().put("user_id", id1);
 			System.out.println("插入地址成功");
 			return "iSuccess";
 		}else if(result.equals(com.service.impl.AddressServiceImpl.FAIL)){

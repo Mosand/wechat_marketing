@@ -8,6 +8,7 @@
            </id>
            <property name="id1" column="id1"></property>
            <property name="goods_id" column="goods_id"></property>
+           <property name="goods_name" column="goods_name"></property>
            <property name="buy_num" column="buy_num"></property>
            <property name="spend" column="spend"></property>
            <property name="time" column="time"></property>

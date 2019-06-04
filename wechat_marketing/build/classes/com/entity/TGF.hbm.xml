@@ -6,9 +6,12 @@
            <id name="id" column="id">
                 <generator class="increment"></generator>
            </id>
-           <property name="goods_id" column="goods_id"></property>
-           <property name="startNum" column="startNum"></property>
-           <property name="tuiguangfei" column="tuiguangfei"></property>
-           <property name="endNum" column="endNum"></property>
+           <property name="goods_id" column="goods_id"></property>       
+           <property name="tuiguangfei1" column="tuiguangfei1"></property>
+           <property name="tuiguangfei2" column="tuiguangfei2"></property>
+           <property name="tuiguangfei3" column="tuiguangfei3"></property>
+           <property name="tuiguangfei4" column="tuiguangfei4"></property>
+           <property name="tuiguangfei5" column="tuiguangfei5"></property>
+           <property name="tuiguangfei6" column="tuiguangfei6"></property>
      </class>
 </hibernate-mapping>

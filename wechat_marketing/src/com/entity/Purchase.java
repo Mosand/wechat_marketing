@@ -18,7 +18,8 @@ package com.entity;
 public class Purchase {
 
 	private String id1;
-	private String goods_id;
+	private int goods_id;
+	private String goods_name;
 	private int buy_num;
 	private float spend;
 	private String time;
@@ -32,10 +33,11 @@ public class Purchase {
 		
 	}
 	
-	public Purchase(String id1,String goods_id,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num){
+	public Purchase(String id1,int goods_id,String goods_name,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num){
 		super();
 		this.id1 = id1;
 		this.goods_id = goods_id;
+		this.goods_name = goods_name;
 		this.buy_num = buy_num;
 		this.spend = spend;
 		this.time = time;
@@ -53,11 +55,11 @@ public class Purchase {
 		this.id1 = id1;
 	}
 
-	public String getGoods_id() {
+	public int getGoods_id() {
 		return goods_id;
 	}
 
-	public void setGoods_id(String goods_id) {
+	public void setGoods_id(int goods_id) {
 		this.goods_id = goods_id;
 	}
 
@@ -124,6 +126,14 @@ public class Purchase {
 
 	public void setAddressID(int addressID) {
 		this.addressID = addressID;
+	}
+
+	public String getGoods_name() {
+		return goods_name;
+	}
+
+	public void setGoods_name(String goods_name) {
+		this.goods_name = goods_name;
 	}
 	
 	

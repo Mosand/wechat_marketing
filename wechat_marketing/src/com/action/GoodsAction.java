@@ -1,19 +1,24 @@
 package com.action;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.GoodsInfo;
 import com.google.gson.Gson;
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.service.GoodsService;
 
@@ -33,13 +38,30 @@ public class GoodsAction extends ActionSupport{
 	private int admin_num;
 	private String goods_image;
 	private String describe_goods;
+	private float market_price;
 	
 	private GoodsService goodsService;
 	
 	private List<GoodsInfo> lists = new ArrayList<GoodsInfo>();
 	
-	private InputStream inputStream; //Õâ¸öÃû×ÖºÍstruts.xmlÖĞ¶ÔÓ¦£¬²»ÄÜĞ´´í  
-	  
+	private InputStream inputStream; //è¿™ä¸ªåå­—å’Œstruts.xmlä¸­å¯¹åº”ï¼Œä¸èƒ½å†™é”™  
+	
+	//å¯¹åº”è¡¨å•çš„file1  <input type="file" name="file1"/>
+	private File file1;
+	//å½“å‰ä¸Šä¼ çš„æ–‡ä»¶å
+	private String file1FileName;
+	//æ–‡ä»¶ç±»å‹(MIME)
+	private String file1ContentType;
+	public void setFile1(File file1) {
+		this.file1 = file1;
+	}
+	public void setFile1FileName(String file1FileName) {
+		this.file1FileName = file1FileName;
+	}
+	public void setFile1ContentType(String file1ContentType) {
+		this.file1ContentType = file1ContentType;
+	   }		
+	
     public InputStream getInputStream() {  
         return inputStream;  
     }  
@@ -64,7 +86,7 @@ public class GoodsAction extends ActionSupport{
 		this.goodsService = goodsService;
 	}
 
-	//Õâ¸ö·½·¨±ØĞëĞ´ÉÏ
+	//è¿™ä¸ªæ–¹æ³•å¿…é¡»å†™ä¸Š
     public List<GoodsInfo> getLists() {
         return lists;
     }
@@ -145,9 +167,17 @@ public class GoodsAction extends ActionSupport{
 	public void setDescribe_goods(String describe_goods) {
 		this.describe_goods = describe_goods;
 	}
-
+	
+	
+	public float getMarket_price() {
+		return market_price;
+	}
+	public void setMarket_price(float market_price) {
+		this.market_price = market_price;
+	}
+	
 	public String getState(){
-        System.out.println("´«Í³µÄajax");
+        System.out.println("ä¼ ç»Ÿçš„ajax");
         HttpServletResponse response = ServletActionContext.getResponse();
         try {
             PrintWriter out = response.getWriter();
@@ -157,15 +187,17 @@ public class GoodsAction extends ActionSupport{
         }
         return null;
     }
+	
+	
     
-    public String searchGoods() throws UnsupportedEncodingException{//ËÑË÷ÉÌÆ·£¬·µ»ØÉÌÆ·ÁĞ±í
+    public String searchGoods() throws UnsupportedEncodingException{//æœç´¢å•†å“ï¼Œè¿”å›å•†å“åˆ—è¡¨
 		
-		System.out.println("action.searchGoods·½·¨Ö´ĞĞ");
+		System.out.println("action.searchGoodsæ–¹æ³•æ‰§è¡Œ");
 		String result = goodsService.searchGoods();
 		if(result.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){//search success
 			lists = goodsService.findGoods();
 			Gson gson = new Gson();
-			System.out.println("lists:"+gson.toJson(lists));//²é¿´json¸ñÊ½
+			System.out.println("lists:"+gson.toJson(lists));//æŸ¥çœ‹jsonæ ¼å¼
 			return "findSuccess";
 		}else if(result.equals(com.service.impl.GoodsServiceImpl.FAIL)){
 			inputStream = new ByteArrayInputStream("fail"  
@@ -178,55 +210,104 @@ public class GoodsAction extends ActionSupport{
 	
     public String updateGoods() throws UnsupportedEncodingException{
     	
-    	System.out.println("action.updateGoods·½·¨Ö´ĞĞ");
-    	String result = goodsService.updateGoods(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods);
+    	System.out.println("action.updateGoodsæ–¹æ³•æ‰§è¡Œ");
+    	String result = goodsService.updateGoods(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price);
     	if(result.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){
     		inputStream = new ByteArrayInputStream("updateSuccess"  
                     .getBytes("UTF-8")); 
-			System.out.println("ÉÌÆ·¸üĞÂ³É¹¦");
+			System.out.println("å•†å“æ›´æ–°æˆåŠŸ");
 			return "updateSuccess";
 		}else if(result.equals(com.service.impl.GoodsServiceImpl.FAIL)){
-			inputStream = new ByteArrayInputStream("uodateFail"  
+			inputStream = new ByteArrayInputStream("updateFail"  
                     .getBytes("UTF-8")); 
-			System.out.println("ÉÌÆ·¸üĞÂÊ§°Ü");
+			System.out.println("å•†å“æ›´æ–°å¤±è´¥");
 			return "updateFail";
 	}
     	return null;	
-    }
+   }
     
     public String deleteGoods() throws UnsupportedEncodingException{
     	
-    	System.out.println("action.deleteGoods·½·¨Ö´ĞĞ");
+    	System.out.println("action.deleteGoodsæ–¹æ³•æ‰§è¡Œ");
     	String result = goodsService.deleteGoods(goods_id);
 		if(result.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){//search success
 			inputStream = new ByteArrayInputStream("deleteSuccess"  
                     .getBytes("UTF-8")); 
-			System.out.println("ÉÌÆ·É¾³ı³É¹¦");
+			System.out.println("å•†å“åˆ é™¤æˆåŠŸ");
 			return "deleteSuccess";
 		}else if(result.equals(com.service.impl.GoodsServiceImpl.FAIL)){
 			inputStream = new ByteArrayInputStream("deleteFail"  
                     .getBytes("UTF-8")); 
-			System.out.println("ÉÌÆ·É¾³ıÊ§°Ü");
+			System.out.println("å•†å“åˆ é™¤å¤±è´¥");
 			return "deleteFail";
 		}
 		return null;		
     }
     
     public String addGoods() throws UnsupportedEncodingException{
-    	System.out.println("action.addGoods·½·¨Ö´ĞĞ");
-    	String result = goodsService.addGoods(goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods);
+    	System.out.println("action.addGoodsæ–¹æ³•æ‰§è¡Œ");   
+		//goodsInfo.setGoods_id(goods_id);
+    	String result = goodsService.addGoods(goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price);
     	if(result.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){//search success
 			inputStream = new ByteArrayInputStream("addSuccess"  
                     .getBytes("UTF-8")); 
-			System.out.println("ÉÌÆ·Ìí¼Ó³É¹¦");
+			System.out.println("å•†å“æ·»åŠ æˆåŠŸ");
 			return "addSuccess";
 		}else if(result.equals(com.service.impl.GoodsServiceImpl.FAIL)){
 			inputStream = new ByteArrayInputStream("addFail"  
                     .getBytes("UTF-8")); 
-			System.out.println("ÉÌÆ·Ìí¼ÓÊ§°Ü");
+			System.out.println("å•†å“æ·»åŠ å¤±è´¥");
 			return "addFail";
 		}
 		return null;	
     }
     
+    
+    public String uploadGoodsImage() throws IOException{
+    	
+    	System.out.println("action.uploadGoodsImageæ–¹æ³•æ‰§è¡Œ");
+    	String path="/image";
+	    String target=ServletActionContext.getServletContext().getRealPath(path);
+	    
+	    if(file1FileName != null){
+	    	File destFile=new File(target,file1FileName);
+		    System.out.println("destFile:"+destFile);
+		    //æŠŠä¸Šä¼ çš„æ–‡ä»¶ï¼Œæ‹·è´åˆ°ç›®æ ‡æ–‡ä»¶ä¸­
+		    FileUtils.copyFile(file1, destFile);
+		    GoodsInfo goodsInfo = new GoodsInfo();
+		    goods_image=destFile.getPath();
+			System.out.println("goods_url:"+goods_image);
+			goodsInfo.setGoods_image(goods_image);
+			String result=goodsService.upload(goods_id,goods_image);
+			if(result.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){//search success
+				inputStream = new ByteArrayInputStream("uploadSuccess"  
+	                    .getBytes("UTF-8")); 
+				System.out.println("å•†å“å›¾ç‰‡ä¸Šä¼ æˆåŠŸ");
+				return "uploadSuccess";
+			}else if(result.equals(com.service.impl.GoodsServiceImpl.FAIL)){
+				inputStream = new ByteArrayInputStream("uploadaddFail"  
+	                    .getBytes("UTF-8")); 
+				System.out.println("å•†å“å›¾ç‰‡ä¸Šä¼ å¤±è´¥");
+				return "uploadFail";
+			}	
+	    }
+		return null;
+    }
+    
+    public String searchItem() throws UnsupportedEncodingException{
+    	
+    	System.out.println("action.searchItemæ–¹æ³•æ‰§è¡Œ");
+		String result = goodsService.searchItem(goods_id);
+		if(result.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){//search success
+			lists = goodsService.findItem(goods_id);
+			Gson gson = new Gson();
+			System.out.println("lists:"+gson.toJson(lists));//æŸ¥çœ‹jsonæ ¼å¼
+			return "findItemSuccess";
+		}else if(result.equals(com.service.impl.GoodsServiceImpl.FAIL)){
+			inputStream = new ByteArrayInputStream("fail"  
+                    .getBytes("UTF-8")); 
+			return "findItemFail";
+		}
+		return null;
+    }
 }

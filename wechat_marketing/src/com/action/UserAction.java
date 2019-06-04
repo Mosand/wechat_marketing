@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.Purchase;
+import com.opensymphony.xwork2.ActionContext;
 import com.service.UserService;
 
 public class UserAction {
@@ -130,13 +131,14 @@ public class UserAction {
         return null;
     }
 	
-	public String findNextDeal() throws UnsupportedEncodingException{
+	public String findNextDeal() throws UnsupportedEncodingException{//查找所有下级购买情况
 		
 		System.out.println("action.findNextDeal方法执行");
 		
 		String result = userService.findDeal(id1,id2);
 		if(result == com.service.impl.UserServiceImpl.SUCCESS){
-			lists = userService.findOneDeal(id1,id2);
+			lists = userService.findAllNextDeal(id1,id2);
+			ActionContext.getContext().put("user_id", id2);
 			System.out.println("lists"+lists);
 			return "findSuccess";
 		}else if(result == com.service.impl.UserServiceImpl.FAIL){
@@ -148,4 +150,41 @@ public class UserAction {
 		return null;
 	}
 	
+	public String saveErweima() throws UnsupportedEncodingException{
+		
+		System.out.println("action.saveErweima方法执行");
+		
+		String result = userService.saveErweima(id1,erweima);
+		if(result == com.service.impl.UserServiceImpl.SUCCESS){
+			inputStream = new ByteArrayInputStream("saveSuccess"  
+                    .getBytes("UTF-8")); 
+			System.out.println("save 二维码成功");
+			return "saveSuccess";
+		}else if(result == com.service.impl.UserServiceImpl.FAIL){
+			inputStream = new ByteArrayInputStream("saveFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("save 二维码失败");
+			return "saveFail";
+		}
+		return null;
+	}
+	
+	public String findErweima() throws UnsupportedEncodingException{
+		System.out.println("action.saveErweima方法执行");
+		
+		String result = userService.findErweima(id1);
+		if(result == com.service.impl.UserServiceImpl.SUCCESS){
+			String erweima = userService.searchErweima(id1);
+			inputStream = new ByteArrayInputStream(erweima 
+                    .getBytes("UTF-8")); 
+			System.out.println("查询 二维码成功");
+			return "findErSuccess";
+		}else if(result == com.service.impl.UserServiceImpl.FAIL){
+			inputStream = new ByteArrayInputStream("saveErFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println(" 二维码失败");
+			return "findErFail";
+		}
+		return null;
+	}
 }

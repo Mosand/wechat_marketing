@@ -26,6 +26,7 @@ public class GoodsInfo {
 	private int admin_num;
 	private String goods_image;
 	private String describe_goods;
+	private float market_price;
 	
 	public GoodsInfo(int goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods){
 		super();
@@ -118,6 +119,15 @@ public class GoodsInfo {
 	public void setDescribe_goods(String describe_goods) {
 		this.describe_goods = describe_goods;
 	}
+
+	public float getMarket_price() {
+		return market_price;
+	}
+
+	public void setMarket_price(float market_price) {
+		this.market_price = market_price;
+	}
+
 
 	
 	

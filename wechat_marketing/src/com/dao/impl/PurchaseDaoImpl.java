@@ -12,31 +12,32 @@ import com.entity.Purchase;
 public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 
 	@Override
-	public String makeDeal(String id1,String goods_id,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num){
+	public String makeDeal(String id1,String time,String deal_num){
 		
-		deal_num = id1 + goods_id +  time ;
+		deal_num = id1 + time ;
 		return deal_num;
 	}
 	
 	@Override
-	public String saveDeal(String id1,String goods_id,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num,int addressID){
+	public String saveDeal(String id1,int goods_id,String goods_name,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num,int addressID){
 		
-		deal_num = this.makeDeal(id1, goods_id, buy_num, spend, time, state, avatar_url, goods_image, deal_num);		
+		deal_num = this.makeDeal(id1, time, deal_num);		
 		Session se =this.getSession();
 		String hql="";
 		
-		hql = "insert into purchase(id1, goods_id, buy_num, spend, time, state, avatar_url, goods_image, deal_num,addressID) values(?,?,?,?,?,?,?,?,?,?)";
+		hql = "insert into purchase(id1, goods_id, goods_name,buy_num, spend, time, state, avatar_url, goods_image, deal_num,addressID) values(?,?,?,?,?,?,?,?,?,?,?)";
 		Query query= se.createSQLQuery(hql);
 		query.setString(0, id1);
-		query.setString(1, goods_id);
-		query.setInteger(2, buy_num);
-		query.setFloat(3, spend);
-		query.setString(4, time);
-		query.setInteger(5, state);
-		query.setString(6, avatar_url);
-		query.setString(7, goods_image);
-		query.setString(8, deal_num);
-		query.setInteger(9, addressID);
+		query.setInteger(1, goods_id);
+		query.setString(2, goods_name);
+		query.setInteger(3, buy_num);
+		query.setFloat(4, spend);
+		query.setString(5, time);
+		query.setInteger(6, state);
+		query.setString(7, avatar_url);
+		query.setString(8, goods_image);
+		query.setString(9, deal_num);
+		query.setInteger(10, addressID);
 		if(query.executeUpdate() == 1){
 			return "success";
 		}else
@@ -62,6 +63,22 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 		 
 		return null;
 		
+	}
+	
+	@Override
+	public String change(int state,String deal_num){
+		
+		Session se =this.getSession();
+		String hql="";
+		state = 1;
+		hql = "update purchase p set p.state = ? where p.deal_num = ?";
+		Query query= se.createSQLQuery(hql);
+		query.setInteger(0, state);
+		query.setString(1, deal_num);
+		if(query.executeUpdate() == 1){
+			return "success";
+		}else
+			return "fail";
 	}
 	
 }

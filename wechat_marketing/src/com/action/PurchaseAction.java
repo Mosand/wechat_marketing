@@ -14,13 +14,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.entity.Address;
 import com.entity.Purchase;
+import com.opensymphony.xwork2.ActionContext;
 import com.service.PurchaseService;
 
 public class PurchaseAction {
 
 	private String id1;
-	private String goods_id;
+	private int goods_id;
+	private String goods_name;
 	private int buy_num;
 	private float spend;
 	private String time;
@@ -51,11 +54,11 @@ public class PurchaseAction {
 		this.id1 = id1;
 	}
 
-	public String getGoods_id() {
+	public int getGoods_id() {
 		return goods_id;
 	}
 
-	public void setGoods_id(String goods_id) {
+	public void setGoods_id(int goods_id) {
 		this.goods_id = goods_id;
 	}
 
@@ -125,6 +128,14 @@ public class PurchaseAction {
 	
 	
 	
+	public String getGoods_name() {
+		return goods_name;
+	}
+
+	public void setGoods_name(String goods_name) {
+		this.goods_name = goods_name;
+	}
+
 	public int getAddressID() {
 		return addressID;
 	}
@@ -161,11 +172,13 @@ public class PurchaseAction {
 		String time1=format.format(date);
 		time = time1.toString();
 		purchase.setTime(time);
-    	
-		String result = purchaseService.saveDeal(id1,goods_id,buy_num,spend,time,state,avatar_url,goods_image,deal_num,addressID);
+    	Address address = new Address();
+    	addressID = address.getId();
+		String result = purchaseService.saveDeal(id1,goods_id,goods_name,buy_num,spend,time,state,avatar_url,goods_image,deal_num,addressID);
 		if(result.equals(com.service.impl.PurchaseServiceImpl.SUCCESS)){
 			 inputStream = new ByteArrayInputStream("success"  
-	                    .getBytes("UTF-8"));   
+	                    .getBytes("UTF-8"));
+			 ActionContext.getContext().put("user_id", id1);
 			System.out.println("插入deal_num成功");
 			return "iSuccess";
 		}else if(result.equals(com.service.impl.PurchaseServiceImpl.FAIL)){
@@ -184,6 +197,7 @@ public class PurchaseAction {
 		if(result == com.service.impl.PurchaseServiceImpl.SUCCESS){
 			lists = purchaseService.findOneDeal(id1);
 			System.out.println("lists"+lists);
+			ActionContext.getContext().put("user_id", id1);
 			return "findSuccess";
 		}else if(result == com.service.impl.PurchaseServiceImpl.FAIL){
 			inputStream = new ByteArrayInputStream("findfail"  
@@ -195,6 +209,21 @@ public class PurchaseAction {
 		
 	}
 	
-	
+	public String changeState() throws UnsupportedEncodingException{
+		System.out.println("action.changeState方法执行");
+    	String result = purchaseService.changeState(state,deal_num);
+    	if(result.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){
+    		inputStream = new ByteArrayInputStream("changeSuccess"  
+                    .getBytes("UTF-8")); 
+			System.out.println("订单状态更新成功");
+			return "changeSuccess";
+		}else if(result.equals(com.service.impl.GoodsServiceImpl.FAIL)){
+			inputStream = new ByteArrayInputStream("changeFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("订单状态更新失败");
+			return "changeFail";
+	}
+    	return null;
+	}
     
 }

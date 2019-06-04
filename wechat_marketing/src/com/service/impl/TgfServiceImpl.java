@@ -1,6 +1,5 @@
 package com.service.impl;
 
-import com.dao.GoodsDao;
 import com.dao.TgfDao;
 import com.service.TgfService;
 
@@ -15,9 +14,9 @@ public class TgfServiceImpl implements TgfService{
 	}
 	
 	@Override
-	public String saveTgf(int goods_id,int startNum,float tuiguangfei,int endNum){
+	public String saveTgf(int goods_id,float tuiguangfei1,float tuiguangfei2,float tuiguangfei3,float tuiguangfei4,float tuiguangfei5,float tuiguangfei6){
 		
-		String result = tgfDao.save(goods_id,startNum,tuiguangfei,endNum);
+		String result = tgfDao.save(goods_id,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
 		if(result == "success"){
 			return SUCCESS;
 		}else if(result.equals("fail")){

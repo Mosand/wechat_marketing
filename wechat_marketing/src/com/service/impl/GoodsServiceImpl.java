@@ -32,9 +32,9 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 	
 	@Override
-	public String updateGoods(int goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods){
+	public String updateGoods(int goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods,float market_price){
 		
-		String result = goodsDao.update(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods);
+		String result = goodsDao.update(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price);
 		if(result == "success"){
 			return SUCCESS;
 		}else if(result.equals("fail")){
@@ -56,14 +56,41 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 	
 	@Override
-	public String addGoods(String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods){
+	public String addGoods(String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods,float market_price){
 		
-		String result = goodsDao.add(goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods);
+		String result = goodsDao.add(goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price);
 		if(result == "success"){
 			return SUCCESS;
 		}else if(result.equals("fail")){
 			return FAIL;
 		}
 			return null;
+	}
+	
+	@Override
+	public String upload(int goods_id,String goods_image){
+		String result = goodsDao.upload(goods_id,goods_image);
+		if(result == "success"){
+			return SUCCESS;
+		}else if(result.equals("fail")){
+			return FAIL;
+		}
+			return null;
+	}
+	
+	
+	@Override
+	public String searchItem(int goods_id) {
+		List<GoodsInfo> goodslist = goodsDao.findItem(goods_id);
+		if(goodslist==null){
+			return FAIL;
+		}else{
+			return SUCCESS;
+		}
+	}
+	@Override
+	public List<GoodsInfo> findItem(int goods_id) {
+		// TODO Auto-generated method stub
+		return goodsDao.findItem(goods_id);
 	}
 }

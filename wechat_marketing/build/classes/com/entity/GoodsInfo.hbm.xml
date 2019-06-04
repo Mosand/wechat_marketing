@@ -15,5 +15,6 @@
            <property name="admin_num" column="admin_num"></property>
            <property name="goods_image" column="goods_image"></property>
            <property name="describe_goods" column="describe_goods"></property>
+           <property name="market_price" column="market_price"></property>
      </class>
 </hibernate-mapping>

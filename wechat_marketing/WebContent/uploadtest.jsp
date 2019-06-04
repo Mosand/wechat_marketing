@@ -5,13 +5,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>test</title>
+<title>上传</title>
 </head>
 <body>
-<form action="goods_searchGoods" method="post" enctype="multipart/form-data">
+<form action="goods_uploadGoodsImage" method="post" enctype="multipart/form-data">
      文件名：<input type="text" name="filename"/><br/>
      文件：<input type="file" name="file1"/><br/>
-          <input type="submit" value="上传文件">
+     	  
+          <input type = "hidden" name="goods_id" value="华为手机2019-06-04 17:48:33" ><input type="submit" value="上传文件">
+          
  </form>
  
  <a href="${pageContext.request.contextPath }/displayFile">check</a>
