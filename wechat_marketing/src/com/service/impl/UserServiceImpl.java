@@ -55,4 +55,15 @@ public class UserServiceImpl implements UserService{
 	public String searchErweima(String id1) {
 		return userDao.findErweima(id1);
 	}
+
+	@Override
+	public String saveInfo(String id1, String username, String avatar_url) {
+		String result = userDao.saveInfo(id1,username,avatar_url);
+		if(result == "success"){
+			return SUCCESS;
+		}else if(result.equals("fail")){
+			return FAIL;
+		}
+			return null;
+	}
 }

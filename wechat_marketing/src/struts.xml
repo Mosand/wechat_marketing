@@ -13,6 +13,10 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param> 
 			</result>
+			    <interceptor-ref name="defaultStack">
+                   <!-- 限制运行的文件的扩展名 fileUpload.allowedExtensions固定写法-->
+                   <param name="fileUpload.allowedExtensions">jpg,png,jpeg</param>
+                </interceptor-ref>
 			<result name="updateSuccess" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param> 
@@ -29,6 +33,10 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param> 
 			</result>
+			    <interceptor-ref name="defaultStack">
+                   <!-- 限制运行的文件的扩展名 fileUpload.allowedExtensions固定写法-->
+                   <param name="fileUpload.allowedExtensions">jpg,png,jpeg</param>
+                </interceptor-ref>
 			<result name="addSuccess" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param> 
@@ -51,7 +59,7 @@
 				<param name="inputName">inputStream</param> 
 			</result>
 			<result name="findItemSuccess" type="json">
-				<param name="root">lists</param>
+				<param name="root">lists3</param>
 			</result>
 			<result name="findItemFail" type="stream">
 				<param name="contentType">text/html</param>
@@ -84,7 +92,9 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param> 
 			</result>
-			
+			<result name="findAll">/pages/list.jsp</result>
+			<result name="findSuccess">/pages/list.jsp</result>  
+			<result name="findFail">/pages/list.jsp</result>			
 		</action> 
 		          
 		<action name="address_*" class="addressAction" method="{1}">			
@@ -114,6 +124,11 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param> 
 			</result>
+			<!-- 文件上传拦截器，限制运行上传的文件的类型，还有其他一个方法，这是其中一个 -->
+                <interceptor-ref name="defaultStack">
+                   <!-- 限制运行的文件的扩展名 fileUpload.allowedExtensions固定写法-->
+                   <param name="fileUpload.allowedExtensions">jpg,png,jpeg</param>
+                </interceptor-ref>
 			<result name="saveSuccess" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param>
@@ -130,6 +145,15 @@
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param> 
 			</result>
+			<result name="saveInfoSuccess" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param>
+			</result>
+			<result name="saveInfoFail" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param> 
+			</result>
+			
 		</action>
 		
 		<action name="tgf_*" class="tgfAction" method="{1}">
@@ -138,6 +162,21 @@
 				<param name="inputName">inputStream</param> 
 			</result>
 			<result name="saveFail" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param> 
+			</result>
+			<result name="findSuccess" type="json">
+				<param name="root">lists</param>
+			</result>
+			<result name="findFail" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param> 
+			</result>
+			<result name="updateSuccess" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param>
+			</result>
+			<result name="updateFail" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param> 
 			</result>

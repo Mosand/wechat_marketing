@@ -51,9 +51,11 @@
 	<!-- 配置action，action交由spring管理 -->
 	<bean id="goodsAction" class="com.action.GoodsAction" scope="prototype">
 		<property name="goodsService" ref="goodsService"></property>
+		<property name="tgfService" ref="tgfService"></property>
 	</bean>
 	<bean id="purchaseAction" class="com.action.PurchaseAction" scope="prototype">
 		<property name="purchaseService" ref="purchaseService"></property>
+		<property name="addressService" ref="addressService"></property>
 	</bean>
 	<bean id="addressAction" class="com.action.AddressAction" scope="prototype">
 		<property name="addressService" ref="addressService"></property>

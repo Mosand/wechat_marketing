@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.dao.UserDao;
-import com.entity.GoodsInfo;
 import com.entity.Purchase;
 import com.entity.UserInfo;
 
@@ -84,9 +83,9 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao{
 			return "fail";
 	}
 	
+	@SuppressWarnings({ "unchecked"})
 	@Override
 	public String findErweima(String id1){
-		Session se =this.getSession();
 		String hql="";
 		hql = "from user_info where id1 = ?";
 		List<UserInfo> userlist=this.getHibernateTemplate().find(hql,id1);
@@ -98,5 +97,20 @@ public class UserDaoImpl extends HibernateDaoSupport implements UserDao{
 		}
 		
 		return null;
+	}
+
+	@Override
+	public String saveInfo(String id1, String username, String avatar_url) {
+		Session se =this.getSession();
+		String hql="";
+		hql = "insert into user_info(id1,username,avatar_url) values(?,?,?)";
+		Query query= se.createSQLQuery(hql);
+		query.setString(0, id1);
+		query.setString(1, username);
+		query.setString(2, avatar_url);
+		if(query.executeUpdate() == 1){
+			return "success";
+		}else
+			return "fail";
 	}
 }

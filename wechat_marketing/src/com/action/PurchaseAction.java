@@ -10,17 +10,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.Address;
+import com.entity.PageBean;
 import com.entity.Purchase;
 import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
+import com.service.AddressService;
 import com.service.PurchaseService;
 
-public class PurchaseAction {
+public class PurchaseAction extends ActionSupport implements ModelDriven<Purchase>{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id1;
 	private int goods_id;
 	private String goods_name;
@@ -32,9 +41,17 @@ public class PurchaseAction {
 	private String goods_image;
 	private String deal_num;
 	private int addressID;
-	
+	private String username;
+	private Purchase purchase;
+	private AddressService addressService ;
 	private PurchaseService purchaseService;
 	private List<Purchase> lists = new ArrayList<Purchase>();
+	
+	// 当前页数
+	private Integer currPage = 1;
+	public void setCurrPage(Integer currPage) {
+		this.currPage = currPage;
+	}
 	
 	private InputStream inputStream; //这个名字和struts.xml中对应，不能写错  
 	  
@@ -126,8 +143,19 @@ public class PurchaseAction {
 		this.purchaseService = purchaseService;
 	}
 	
+	@Override
+	public Purchase getModel(){
+		return purchase;
+	}
 	
-	
+	public AddressService getAddressService() {
+		return addressService;
+	}
+
+	public void setAddressService(AddressService addressService) {
+		this.addressService = addressService;
+	}
+
 	public String getGoods_name() {
 		return goods_name;
 	}
@@ -142,6 +170,14 @@ public class PurchaseAction {
 
 	public void setAddressID(int addressID) {
 		this.addressID = addressID;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	//这个方法必须写上
@@ -164,7 +200,7 @@ public class PurchaseAction {
         return null;
     }
 	
-    public String saveDealNum() throws UnsupportedEncodingException{ //根据id1和goods_id和时间生成流水号
+    public String saveDealNum() throws UnsupportedEncodingException{ //根据id1和时间生成流水号
     	System.out.println("action.saveDealNum方法执行");
     	Purchase purchase = new Purchase();
     	Date date=new Date();
@@ -172,9 +208,19 @@ public class PurchaseAction {
 		String time1=format.format(date);
 		time = time1.toString();
 		purchase.setTime(time);
-    	Address address = new Address();
-    	addressID = address.getId();
-		String result = purchaseService.saveDeal(id1,goods_id,goods_name,buy_num,spend,time,state,avatar_url,goods_image,deal_num,addressID);
+
+		List<Address> list = new ArrayList<Address>();//根据id1查询address表中address的id，作为addressID
+		String result1 = addressService.findAddress(id1);
+		if(result1 == null){
+			return null;
+		}else if(result1 == com.service.impl.AddressServiceImpl.SUCCESS){
+			list = addressService.findOneAddress(id1);
+			addressID = list.get(0).getId();//根据id1查询address表中address的id，作为addressID
+			System.out.println("lists"+lists);		
+		}else if(result1 == com.service.impl.AddressServiceImpl.FAIL){
+			return null;
+		}
+		String result = purchaseService.saveDeal(id1,username,goods_id,goods_name,buy_num,spend,time,state,avatar_url,goods_image,deal_num,addressID);
 		if(result.equals(com.service.impl.PurchaseServiceImpl.SUCCESS)){
 			 inputStream = new ByteArrayInputStream("success"  
 	                    .getBytes("UTF-8"));
@@ -226,4 +272,33 @@ public class PurchaseAction {
     	return null;
 	}
     
+	public String findAllDeal(){
+		
+		PageBean<Purchase> pageBean = purchaseService.findByPage(currPage);
+		
+		ActionContext.getContext().getValueStack().push(pageBean);
+		
+		return "findAll";
+	}
+	
+	public String findDealByNameandTime(){
+		
+		HttpServletRequest request = ServletActionContext.getRequest();
+		String username = request.getParameter("username");
+		// 获取
+		String time = request.getParameter("time");
+		Purchase searchModel = new Purchase();
+		searchModel.setUsername(username);
+		searchModel.setTime(time);
+		PageBean<Purchase> pageBean = purchaseService.findByPage(searchModel,currPage);
+		System.out.println("service running");
+		if(pageBean == null){
+			return "findFail";
+		}
+		// 使用的是模型驱动，把信息放入值栈中，采可以使用OGNL表达是获取
+		ActionContext.getContext().getValueStack().push(pageBean);
+		
+		return "findSuccess";
+	}
+	
 }

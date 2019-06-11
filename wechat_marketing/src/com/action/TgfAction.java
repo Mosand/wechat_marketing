@@ -4,12 +4,15 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.GoodsInfo;
+import com.entity.TGF;
 import com.service.TgfService;
 
 public class TgfAction {
@@ -26,7 +29,7 @@ public class TgfAction {
 	
 	private TgfService tgfService;
 	
-	
+	private List<TGF> lists = new ArrayList<TGF>();
 	private InputStream inputStream;
 
 
@@ -129,6 +132,16 @@ public class TgfAction {
 		this.inputStream = inputStream;
 	}
 	
+	public List<TGF> getLists() {
+		return lists;
+	}
+
+
+	public void setLists(List<TGF> lists) {
+		this.lists = lists;
+	}
+
+
 	public String getState2(){
         System.out.println("传统的ajax");
         HttpServletResponse response = ServletActionContext.getResponse();
@@ -160,4 +173,40 @@ public class TgfAction {
 		}
 		return null;	
 	}
+	
+	public String findTgf() throws UnsupportedEncodingException{
+		System.out.println("action.findTgf方法执行");
+		
+		String result = tgfService.searchTgf(goods_id);
+		if(result.equals(com.service.impl.TgfServiceImpl.SUCCESS)){//search success
+			lists = tgfService.findTgf(goods_id);
+			return "findSuccess";
+		}else if(result.equals(com.service.impl.TgfServiceImpl.FAIL)){
+			inputStream = new ByteArrayInputStream("saveFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("查找推广费成功");
+			return "findFail";
+		}
+		return null;
+	}
+	
+	public String updateTgf() throws UnsupportedEncodingException{
+		
+		System.out.println("action.findTgf方法执行");
+		
+		String result = tgfService.updateTgf(goods_id,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
+		if(result.equals(com.service.impl.TgfServiceImpl.SUCCESS)){//search success
+			inputStream = new ByteArrayInputStream("updateSuccess"  
+                    .getBytes("UTF-8")); 
+			return "updateSuccess";
+		}else if(result.equals(com.service.impl.TgfServiceImpl.FAIL)){
+			inputStream = new ByteArrayInputStream("updateFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("查找推广费成功");
+			return "updateFail";
+		}
+		return null;
+		
+	}
+	
 }

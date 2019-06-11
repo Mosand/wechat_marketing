@@ -13,6 +13,7 @@
            <property name="id6" column="id6"></property>
            <property name="id7" column="id7"></property>
            <property name="erweima" column="erweima"></property>
-         
+           <property name="username" column="username"></property>
+           <property name="avatar_url" column="avatar_url"></property>
      </class>
 </hibernate-mapping>

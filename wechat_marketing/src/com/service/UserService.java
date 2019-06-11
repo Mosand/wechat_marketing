@@ -14,4 +14,6 @@ public interface UserService {
 
 	String findErweima(String id1);
 	String searchErweima(String id1);
+
+	String saveInfo(String id1, String username, String avatar_url);
 }

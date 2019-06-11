@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.entity.Address;
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.AddressService;
 
@@ -24,7 +25,7 @@ public class AddressAction {
 	private int first_choice;
 	private String address;
 	
-	private AddressService addressService;
+	public AddressService addressService;
 	private List<Address> lists = new ArrayList<Address>();
 	
 	private InputStream inputStream; //这个名字和struts.xml中对应，不能写错  
@@ -110,7 +111,8 @@ public class AddressAction {
 		String result = addressService.findAddress(id1);
 		if(result == com.service.impl.AddressServiceImpl.SUCCESS){
 			lists = addressService.findOneAddress(id1);
-			System.out.println("lists"+lists);
+			Gson gson = new Gson();
+			System.out.println("lists:"+gson.toJson(lists));//查看json格式			
 			ActionContext.getContext().put("user_id", id1);
 			return "findSuccess";
 		}else if(result == com.service.impl.AddressServiceImpl.FAIL){

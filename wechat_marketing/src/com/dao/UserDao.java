@@ -11,4 +11,5 @@ public interface UserDao {
 	List<Purchase> findAllNextDeal(String id1,String id2);
 	String saveErweima(String id1, String erweima);
 	String findErweima(String id1);
+	String saveInfo(String id1, String username, String avatar_url);
 }

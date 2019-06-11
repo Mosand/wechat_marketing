@@ -104,11 +104,12 @@ public class GoodsDaoImpl extends HibernateDaoSupport implements GoodsDao{
 	@Override
 	public String upload(int goods_id,String goods_image){
 		Session se =this.getSession();
+		goods_id = this.findGoodsId();
 		String hql="";
 		hql = "update goods_info g set g.goods_image = ? where g.goods_id = ?";
 		Query query= se.createSQLQuery(hql);
-		query.setInteger(0, goods_id);
-		query.setString(1, goods_image);
+		query.setString(0, goods_image);
+		query.setInteger(1, goods_id);
 		if(query.executeUpdate() == 1){
 			return "success";
 		}else
@@ -131,5 +132,22 @@ public class GoodsDaoImpl extends HibernateDaoSupport implements GoodsDao{
 		
 		return null;
 
+	}
+	
+	@Override
+	public int findGoodsId() {
+		// TODO Auto-generated method stub
+		String hql = "";
+		hql = "from goods_info order by goods_id desc ";
+		@SuppressWarnings("unchecked")
+		List<GoodsInfo> goodslist=this.getHibernateTemplate().find(hql);
+		if(goodslist.size()!=0){
+			System.out.println("≤È—Øgoods≥…π¶");						
+			return goodslist.get(0).getGoods_id();
+		}else if(goodslist.size()==0){
+			return 0;
+		}
+		
+		return 0;
 	}
 }

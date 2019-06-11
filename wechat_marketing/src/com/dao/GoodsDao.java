@@ -19,4 +19,6 @@ public interface GoodsDao {
 	String upload(int goods_id,String goods_image);
 	
 	List<GoodsInfo> findItem(int goods_id);
+	
+	int findGoodsId();
 }

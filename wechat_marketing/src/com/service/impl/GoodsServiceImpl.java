@@ -93,4 +93,10 @@ public class GoodsServiceImpl implements GoodsService{
 		// TODO Auto-generated method stub
 		return goodsDao.findItem(goods_id);
 	}
+	
+	@Override
+	public int findGoodsId() {
+		// TODO Auto-generated method stub
+		return goodsDao.findGoodsId();
+	}
 }

@@ -17,5 +17,8 @@ public interface GoodsService {
 	String upload(int goods_id,String goods_image);
 	
 	String searchItem(int goods_id);
+	
 	List<GoodsInfo> findItem(int goods_id);
+	
+	int findGoodsId();
 }

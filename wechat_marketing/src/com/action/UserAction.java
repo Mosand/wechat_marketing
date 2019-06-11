@@ -1,6 +1,8 @@
 package com.action;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -9,15 +11,19 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
+import com.entity.GoodsInfo;
 import com.entity.Purchase;
+import com.entity.UserInfo;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.UserService;
 
 public class UserAction {
 
 	private String id1;
+	private String username;
 	private String id2;
 	private String id3;
 	private String id4;
@@ -25,12 +31,29 @@ public class UserAction {
 	private String id6;
 	private String id7;
 	private String erweima;
+	private String avatar_url;
 	
 	private UserService userService;
 	private List<Purchase> lists = new ArrayList<Purchase>();
 	
 	private InputStream inputStream;
 
+	private File file1;
+	//当前上传的文件名
+	private String file1FileName;
+	//文件类型(MIME)
+	@SuppressWarnings("unused")
+	private String file1ContentType;
+	
+	public void setFile1(File file1) {
+		this.file1 = file1;
+	}
+	public void setFile1FileName(String file1FileName) {
+		this.file1FileName = file1FileName;
+	}
+	public void setFile1ContentType(String file1ContentType) {
+		this.file1ContentType = file1ContentType;
+	   }		
 	public String getId1() {
 		return id1;
 	}
@@ -94,6 +117,14 @@ public class UserAction {
 	public void setErweima(String erweima) {
 		this.erweima = erweima;
 	}
+	
+	public String getAvatar_url() {
+		return avatar_url;
+	}
+
+	public void setAvatar_url(String avatar_url) {
+		this.avatar_url = avatar_url;
+	}
 
 	public UserService getUserService() {
 		return userService;
@@ -119,6 +150,14 @@ public class UserAction {
 		this.inputStream = inputStream;
 	}
 	
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public String getState2(){
         System.out.println("传统的ajax");
         HttpServletResponse response = ServletActionContext.getResponse();
@@ -139,6 +178,7 @@ public class UserAction {
 		if(result == com.service.impl.UserServiceImpl.SUCCESS){
 			lists = userService.findAllNextDeal(id1,id2);
 			ActionContext.getContext().put("user_id", id2);
+			ActionContext.getContext().put("user_name", username);
 			System.out.println("lists"+lists);
 			return "findSuccess";
 		}else if(result == com.service.impl.UserServiceImpl.FAIL){
@@ -150,10 +190,33 @@ public class UserAction {
 		return null;
 	}
 	
-	public String saveErweima() throws UnsupportedEncodingException{
+	//二维码是地址，类似于图片，和商品上传类似，进行上传和查看
+	public String saveErweima() throws IOException{
 		
 		System.out.println("action.saveErweima方法执行");
-		
+		String path="WebContent/avatar_image";
+	    String target=ServletActionContext.getServletContext().getRealPath(path);
+	    if(file1FileName != null){	    	
+	    	UserInfo userInfo = new UserInfo();
+	    	//String prefix=file1FileName.substring(file1FileName.lastIndexOf(".")+1);//获取图片后缀
+	    	//String goodsid = String.valueOf(goods_id);	    	
+	    	//file1FileName = file1FileName.replaceFirst(file1FileName, goodsid+"."+prefix);//以goods_id+后缀命名图片名字
+	    	File destFile=new File(target,file1FileName); 	
+		    System.out.println("destFile:"+destFile);
+		    //把上传的文件，拷贝到目标文件中
+		    FileUtils.copyFile(file1, destFile);		
+		    erweima=destFile.getPath();
+			System.out.println("erweima:"+erweima);
+			userInfo.setErweima(erweima);
+	    }
+	    if(file1FileName == null){
+	    	File destFile=new File(target,"demo.png");
+	    	//FileUtils.copyFile(file1, destFile);
+	    	UserInfo userInfo = new UserInfo();
+	    	erweima=destFile.getPath();
+			System.out.println("erweima:"+erweima);
+			userInfo.setErweima(erweima);
+	    }
 		String result = userService.saveErweima(id1,erweima);
 		if(result == com.service.impl.UserServiceImpl.SUCCESS){
 			inputStream = new ByteArrayInputStream("saveSuccess"  
@@ -187,4 +250,24 @@ public class UserAction {
 		}
 		return null;
 	}
+	
+	//user_info表里的信息的七层存取。用户姓名和头像的存取。
+	public String saveUsernameandAvatar() throws UnsupportedEncodingException {
+		System.out.println("action.saveUsernameandAvatar方法执行");
+		String result = userService.saveInfo(id1,username,avatar_url);
+		if(result == com.service.impl.UserServiceImpl.SUCCESS){
+			inputStream = new ByteArrayInputStream("saveSuccess"  
+                    .getBytes("UTF-8")); 
+			System.out.println("save用户信息成功");
+			return "saveInfoSuccess";
+		}else if(result == com.service.impl.UserServiceImpl.FAIL){
+			inputStream = new ByteArrayInputStream("saveFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("save用户信息失败");
+			return "saveInfoFail";
+		}
+		return null;
+		
+	}
+	
 }
