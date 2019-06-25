@@ -99,4 +99,22 @@ public class GoodsServiceImpl implements GoodsService{
 		// TODO Auto-generated method stub
 		return goodsDao.findGoodsId();
 	}
+
+//	@Override
+//	public String findGoodsName(int goods_id) {
+//		List<GoodsInfo> goodslist = goodsDao.searchGoodsName();
+//		if(goodslist==null){
+//			return FAIL;
+//		}else{
+//			return SUCCESS;
+//		}
+//	}
+//
+//	@Override
+//	public List<GoodsInfo> searchGoodsName(int goods_id) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+	
+	
 }

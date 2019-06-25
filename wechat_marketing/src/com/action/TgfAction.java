@@ -25,6 +25,7 @@ public class TgfAction {
 	private float tuiguangfei4;
 	private float tuiguangfei5;
 	private float tuiguangfei6;
+	private float tuiguangfei;
 	
 	
 	private TgfService tgfService;
@@ -159,7 +160,7 @@ public class TgfAction {
 		System.out.println("action.saveTgf方法执行");
 		GoodsInfo goodsInfo = new GoodsInfo();
 		goodsInfo.setGoods_id(goods_id);
-		String result = tgfService.saveTgf(goods_id,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
+		String result = tgfService.saveTgf(goods_id,tuiguangfei,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
 		if(result.equals(com.service.impl.TgfServiceImpl.SUCCESS)){//search success
 			inputStream = new ByteArrayInputStream("saveSuccess"  
                     .getBytes("UTF-8")); 
@@ -194,7 +195,7 @@ public class TgfAction {
 		
 		System.out.println("action.findTgf方法执行");
 		
-		String result = tgfService.updateTgf(goods_id,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
+		String result = tgfService.updateTgf(goods_id,tuiguangfei,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
 		if(result.equals(com.service.impl.TgfServiceImpl.SUCCESS)){//search success
 			inputStream = new ByteArrayInputStream("updateSuccess"  
                     .getBytes("UTF-8")); 
@@ -207,6 +208,17 @@ public class TgfAction {
 		}
 		return null;
 		
+	}
+
+
+
+	public float getTuiguangfei() {
+		return tuiguangfei;
+	}
+
+
+	public void setTuiguangfei(float tuiguangfei) {
+		this.tuiguangfei = tuiguangfei;
 	}
 	
 }

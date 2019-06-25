@@ -21,4 +21,7 @@ public interface GoodsService {
 	List<GoodsInfo> findItem(int goods_id);
 	
 	int findGoodsId();
+
+	//String findGoodsName(int goods_id);
+	//List<GoodsInfo> searchGoodsName(int goods_id);
 }

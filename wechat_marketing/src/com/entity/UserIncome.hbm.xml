@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+     <class name="com.entity.UserIncome" table="user_income" entity-name="user_income">
+           <id name="id" column="id">
+                <generator class="increment"></generator>
+           </id>
+           <property name="id1" column="id1"></property>
+           <property name="goods_id" column="goods_id"></property>
+           <property name="ticheng" column="ticheng"></property>
+           <property name="market_price" column="market_price"></property>
+           <property name="reward" column="reward"></property>
+           <property name="admin" column="admin"></property> 
+           <property name="username" column="username"></property> 
+           <property name="avatar_url" column="avatar_url"></property> 
+           <property name="goods_name" column="goods_name"></property> 
+           <property name="deal_num" column="deal_num"></property>         
+     </class>
+</hibernate-mapping>

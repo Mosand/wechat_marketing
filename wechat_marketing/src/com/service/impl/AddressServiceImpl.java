@@ -44,4 +44,38 @@ public class AddressServiceImpl implements AddressService{
 			return null;
 		
 	}
+	@Override
+	public String makeFirst(int id, String id1, int first_choice) {
+		String result = addressDao.makeFisrt(id,id1,first_choice);
+		if(result == "success"){
+			return SUCCESS;
+		}else if(result.equals("fail")){
+			return FAIL;
+		}
+			return null;
+	}
+	@Override
+	public String update(int id, String region, String tel, String name, String address) {
+		// TODO Auto-generated method stub
+		String result = addressDao.update(id,region,tel,name,address);
+		if(result == "success"){
+			return SUCCESS;
+		}else if(result.equals("fail")){
+			return FAIL;
+		}
+			return null;
+	}
+	@Override
+	public String delete(int addressID) {
+		// TODO Auto-generated method stub
+		String result = addressDao.delete(addressID);
+		if(result == "success"){
+			return SUCCESS;
+		}else if(result.equals("fail")){
+			return FAIL;
+		}
+			return FAIL;
+	}
+	
+	
 }

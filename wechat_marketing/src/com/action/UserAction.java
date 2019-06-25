@@ -18,6 +18,7 @@ import com.entity.GoodsInfo;
 import com.entity.Purchase;
 import com.entity.UserInfo;
 import com.opensymphony.xwork2.ActionContext;
+import com.service.GoodsService;
 import com.service.UserService;
 
 public class UserAction {
@@ -34,8 +35,9 @@ public class UserAction {
 	private String avatar_url;
 	
 	private UserService userService;
+	private GoodsService goodsService;
 	private List<Purchase> lists = new ArrayList<Purchase>();
-	
+	private List<UserInfo> lists2 = new ArrayList<UserInfo>();
 	private InputStream inputStream;
 
 	private File file1;
@@ -157,7 +159,22 @@ public class UserAction {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
+	
+	
+	public GoodsService getGoodsService() {
+		return goodsService;
+	}
+	public void setGoodsService(GoodsService goodsService) {
+		this.goodsService = goodsService;
+	}
+	
+	public List<UserInfo> getLists2() {
+		return lists2;
+	}
+	public void setLists2(List<UserInfo> lists2) {
+		this.lists2 = lists2;
+	}
+	
 	public String getState2(){
         System.out.println("传统的ajax");
         HttpServletResponse response = ServletActionContext.getResponse();
@@ -236,11 +253,13 @@ public class UserAction {
 		System.out.println("action.saveErweima方法执行");
 		
 		String result = userService.findErweima(id1);
+		//String result2 = userService.findUsernameAvatar(id1);
+		//String result3 = userService.findGoodsName(goods_id);
 		if(result == com.service.impl.UserServiceImpl.SUCCESS){
-			String erweima = userService.searchErweima(id1);
-			inputStream = new ByteArrayInputStream(erweima 
-                    .getBytes("UTF-8")); 
-			System.out.println("查询 二维码成功");
+			lists2 = userService.searchErweima(id1);
+//			inputStream = new ByteArrayInputStream(erweima 
+//                    .getBytes("UTF-8")); 
+//			System.out.println("查询 二维码成功");
 			return "findErSuccess";
 		}else if(result == com.service.impl.UserServiceImpl.FAIL){
 			inputStream = new ByteArrayInputStream("saveErFail"  
@@ -251,23 +270,42 @@ public class UserAction {
 		return null;
 	}
 	
-	//user_info表里的信息的七层存取。用户姓名和头像的存取。
-	public String saveUsernameandAvatar() throws UnsupportedEncodingException {
+	
+	//用户id1,姓名和头像的存取。
+	public String saveId1andUsernameandAvatar() throws UnsupportedEncodingException {
 		System.out.println("action.saveUsernameandAvatar方法执行");
 		String result = userService.saveInfo(id1,username,avatar_url);
 		if(result == com.service.impl.UserServiceImpl.SUCCESS){
-			inputStream = new ByteArrayInputStream("saveSuccess"  
+			inputStream = new ByteArrayInputStream("saveUSuccess"  
                     .getBytes("UTF-8")); 
 			System.out.println("save用户信息成功");
 			return "saveInfoSuccess";
 		}else if(result == com.service.impl.UserServiceImpl.FAIL){
-			inputStream = new ByteArrayInputStream("saveFail"  
+			inputStream = new ByteArrayInputStream("saveUFail"  
                     .getBytes("UTF-8")); 
 			System.out.println("save用户信息失败");
 			return "saveInfoFail";
 		}
 		return null;
 		
+	}
+	
+	//user_info表里的信息的七层存入。
+	public String updateUser() throws UnsupportedEncodingException{//扫码时候调用此方法，存id1的id2-id7
+		System.out.println("action.saveUsernameandAvatar方法执行");
+		String result = userService.updateUser(id1,id2);
+		if(result == com.service.impl.UserServiceImpl.SUCCESS){
+			inputStream = new ByteArrayInputStream("updateUserSuccess"  
+                    .getBytes("UTF-8")); 
+			System.out.println("update用户信息成功");
+			return "updateUserSuccess";
+		}else if(result == com.service.impl.UserServiceImpl.FAIL){
+			inputStream = new ByteArrayInputStream("updateUserFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("save用户信息失败");
+			return "updateUserFail";
+		}
+		return null;
 	}
 	
 }

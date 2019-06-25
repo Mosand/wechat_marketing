@@ -37,8 +37,8 @@
 <div class="leftnav">
 	<ul class="nav nav-pills nav-stacked">
 	  <li class="selected"><a href="#" style="color: #333;">产品管理</a></li>
-	  <li><a href="${webContent}pages/user_mana.jsp">用户管理</a></li>
-	  <li><a href="${webContent}pages/compa_table.jsp">公司报表</a></li>
+	  <li><a href="userincome_findAllIncome.action">用户管理</a></li>
+	  <li><a href="${webContent}pages/compa_table_1.jsp">公司报表</a></li>
 	</ul>
 </div>
 <!--end leftnav-->
@@ -60,7 +60,7 @@
 				$("#product_panel").html("");
 				if(list.length != 0) {
 					for (var i = 0; i < list.length; i++) {
-						$("#product_panel").append("<div class='panel product_item'><input type='hidden' id='producuItem_"+list[i].goods_id+"'/><img src='${webContent}goods_image/"+list[i].goods_image+"' class='img-rounded img_click'/><div class='product_heading'><h3 class='panel-title'>"+list[i].goods_name+"&nbsp;&nbsp;<span>"+list[i].price+"</span></h3></div></div>");
+						$("#product_panel").append("<div class='panel product_item'><input type='hidden' id='producuItem_"+list[i].goods_id+"'/><img src='"+list[i].goods_image+"' class='img-rounded img_click'/><div class='product_heading'><h3 class='panel-title'>"+list[i].goods_name+"&nbsp;&nbsp;<span>"+list[i].price+"</span></h3></div></div>");
 					}
 				}
 				$("#product_panel").append("<div class='product_item'><a data-target='#add_product' data-toggle='modal'><img src='${webContent}img/add_product.png'/></a></div>");
@@ -76,7 +76,7 @@
 			           success: function (list) {
 			        	$('#itemOperate').html("");   
 			        	
-			        	$('#preimg').attr("src","${webContent}goods_image/"+list[0].goods_image);
+			        	$('#preimg').attr("src",list[0].goods_image);
 			        	$('#goods_id').attr("value",list[0].goods_id);			        	
 			        	$('#goods_name').attr("value",list[0].goods_name);
 			        	$('#price').attr("value",list[0].price);		        	

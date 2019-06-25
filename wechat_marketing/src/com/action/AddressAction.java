@@ -24,6 +24,7 @@ public class AddressAction {
 	private String tel;
 	private int first_choice;
 	private String address;
+	private int addressID;
 	
 	public AddressService addressService;
 	private List<Address> lists = new ArrayList<Address>();
@@ -71,7 +72,7 @@ public class AddressAction {
 	public void setFirst_choice(int first_choice) {
 		this.first_choice = first_choice;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -142,5 +143,64 @@ public class AddressAction {
 		}
 		
 		return null;
+	}
+	//地址设为首选，某一时刻只有一个地址作为首选，需要addressID,以及id1来确定某地址首选
+	public String makeFirstChoice() throws UnsupportedEncodingException{
+		System.out.println("action.changeState方法执行");
+    	String result = addressService.makeFirst(addressID,id1,first_choice);
+    	if(result.equals(com.service.impl.AddressServiceImpl.SUCCESS)){
+    		inputStream = new ByteArrayInputStream("makeSuccess"  
+                    .getBytes("UTF-8")); 
+			System.out.println("设为首选成功");
+			return "makeSuccess";
+		}else if(result.equals(com.service.impl.AddressServiceImpl.FAIL)){
+			inputStream = new ByteArrayInputStream("makeFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("设为首选失败");
+			return "makeFail";
+	}
+    	return null;
+	}
+	
+	public String updateAddress() throws UnsupportedEncodingException{
+		System.out.println("action.updateAddress方法执行");
+    	String result = addressService.update(addressID,region,tel,name,address);
+    	if(result.equals(com.service.impl.AddressServiceImpl.SUCCESS)){
+    		inputStream = new ByteArrayInputStream("updateSuccess"  
+                    .getBytes("UTF-8")); 
+			System.out.println("地址更新成功");
+			return "updateSuccess";
+		}else if(result.equals(com.service.impl.AddressServiceImpl.FAIL)){
+			inputStream = new ByteArrayInputStream("updateFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("地址更新失败");
+			return "updateFail";
+	}
+    	return null;
+	}
+	
+	public String deleteAddress() throws UnsupportedEncodingException{
+		System.out.println("action.updateAddress方法执行");
+    	String result = addressService.delete(addressID);
+    	if(result.equals(com.service.impl.AddressServiceImpl.SUCCESS)){
+    		inputStream = new ByteArrayInputStream("deleteSuccess"  
+                    .getBytes("UTF-8")); 
+			System.out.println("地址删除成功");
+			return "deleteSuccess";
+		}else if(result.equals(com.service.impl.AddressServiceImpl.FAIL)){
+			inputStream = new ByteArrayInputStream("deleteFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("地址删除失败");
+			return "deleteFail";
+	}
+    	return null;
+	}
+
+	public int getAddressID() {
+		return addressID;
+	}
+
+	public void setAddressID(int addressID) {
+		this.addressID = addressID;
 	}
 }

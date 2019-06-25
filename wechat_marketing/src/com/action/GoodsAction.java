@@ -38,6 +38,7 @@ public class GoodsAction extends ActionSupport{
 	private String describe_goods;
 	private float market_price;
 	
+	private float tuiguangfei;
 	private float tuiguangfei1;
 	private float tuiguangfei2;
 	private float tuiguangfei3;
@@ -192,6 +193,12 @@ public class GoodsAction extends ActionSupport{
 		this.market_price = market_price;
 	}
 	
+	public float getTuiguangfei() {
+		return tuiguangfei;
+	}
+	public void setTuiguangfei(float tuiguangfei) {
+		this.tuiguangfei = tuiguangfei;
+	}
 	public float getTuiguangfei1() {
 		return tuiguangfei1;
 	}
@@ -301,7 +308,7 @@ public class GoodsAction extends ActionSupport{
 			goodsInfo.setGoods_image(goods_image);
 	    }
     	String result = goodsService.updateGoods(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price);
-    	String result2 = tgfService.updateTgf(goods_id,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
+    	String result2 = tgfService.updateTgf(goods_id,tuiguangfei,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
 		if(result2.equals(com.service.impl.TgfServiceImpl.SUCCESS)){//search success
 			inputStream = new ByteArrayInputStream("updateSuccess"  
                     .getBytes("UTF-8")); 
@@ -382,7 +389,7 @@ public class GoodsAction extends ActionSupport{
                     .getBytes("UTF-8")); 
 			System.out.println("商品添加失败");
 		}
-    	String result1 = tgfService.saveTgf(goods_id,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);//存推广费
+    	String result1 = tgfService.saveTgf(goods_id,tuiguangfei,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);//存推广费
 		if(result1.equals(com.service.impl.TgfServiceImpl.SUCCESS)){//search success
 			inputStream = new ByteArrayInputStream("addSuccess"  
                     .getBytes("UTF-8")); 

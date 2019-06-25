@@ -8,11 +8,22 @@
 <title>上传</title>
 </head>
 <body>
-<form action="user_saveErweima" method="post" enctype="multipart/form-data">
+<form action="goods_uploadGoodsImage" method="post" enctype="multipart/form-data">
      文件名：<input type="text" name="filename"/><br/>
      文件：<input type="file" name="file1"/><br/>
      	  
-          <input type = "hidden" name="id1" value="1a1" ><input type="submit" value="上传文件">
+     	  <div class="form-group">
+               		 <label for="verifycode" class="col-md-3 control-label"><font face="Microsoft YaHei">验证码：</font></label>
+              		  <div class="col-md-6">
+                 		  <img src="SecurityCodeImageAction" id="img"  style="cursor:hand;" alt="看不清，换一张"/>
+                         <span style="color:red;" id="simg">
+                         <s:property value="#request.error2"></s:property>
+                          </span>
+                          <!-- <a href="javascript:;" onclick="document.getElementById('img').
+                           src='checkcode?'+new Date().getTime();"><span style="font-size:12px;">看不清，换一张</span></a> -->
+                 		  <input type="text" name="securityCode" id="securityCode" placeholder="验证码" />
+               		 </div>
+          <input type = "hidden" name="goods_id" value="华为手机2019-06-04 17:48:33" ><input type="submit" value="上传文件">
           
  </form>
  

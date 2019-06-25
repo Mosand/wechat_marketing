@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dao.UserDao;
 import com.entity.Purchase;
+import com.entity.UserInfo;
 import com.service.UserService;
 
 public class UserServiceImpl implements UserService{
@@ -43,16 +44,16 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public String findErweima(String id1) {
-		String result = userDao.findErweima(id1);
-		if(result == null){
+	public String findErweima(String deal_num) {//根据deal_num来获取购买者的id1，来查询用户的二维码
+		List<UserInfo> userlist = userDao.findErweima(userDao.findOneDeal(deal_num).get(0).getId1());
+		if(userlist == null){
 			return FAIL;
 		}else 
 			return SUCCESS;
 	}
 	
 	@Override
-	public String searchErweima(String id1) {
+	public List<UserInfo> searchErweima(String id1) {
 		return userDao.findErweima(id1);
 	}
 
@@ -66,4 +67,35 @@ public class UserServiceImpl implements UserService{
 		}
 			return null;
 	}
+
+	@Override
+	public String findUsernameAvatar(String id1) {
+		List<UserInfo> userlist = userDao.searchUsernameAvatar(id1);
+		if(userlist==null){
+			return FAIL;
+		}else{
+			return SUCCESS;
+		}
+	}
+
+	@Override
+	public List<UserInfo> searchUsernameAvatar(String id1) {
+		// TODO Auto-generated method stub
+		
+		return userDao.searchUsernameAvatar(id1);
+	}
+
+	@Override
+	public String updateUser(String id1, String id2) {
+		// TODO Auto-generated method stub
+		String result = userDao.updateUser(id1,id2);
+		if(result == "success"){
+			return SUCCESS;
+		}else if(result.equals("fail")){
+			return FAIL;
+		}
+			return null;
+	}
+
+
 }

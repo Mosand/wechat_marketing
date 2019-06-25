@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+     <class name="com.entity.TransactionRecord" table="transaction_record" entity-name="transaction_record">
+           <id name="id" column="id">
+                <generator class="increment"></generator>
+           </id>
+           <property name="id1" column="id1"></property>
+           <property name="goods_id" column="goods_id"></property>
+           <property name="ticheng" column="ticheng"></property>
+           <property name="market_price" column="market_price"></property>
+           <property name="reward" column="reward"></property>
+           <property name="admin" column="admin"></property>
+           <property name="serial_num" column="serial_num"></property>
+           <property name="time" column="time"></property>
+           <property name="username" column="username"></property>
+           <property name="direction" column="direction"></property>
+           <property name="avatar_url" column="avatar_url"></property>
+           <property name="goods_name" column="goods_name"></property>
+     </class>
+</hibernate-mapping>

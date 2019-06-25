@@ -44,6 +44,9 @@
 				<value>com/entity/Address.hbm.xml</value>
 				<value>com/entity/UserInfo.hbm.xml</value>
 				<value>com/entity/TGF.hbm.xml</value>
+				<value>com/entity/UserIncome.hbm.xml</value>
+				<value>com/entity/TransactionRecord.hbm.xml</value>
+				<value>com/entity/Manager.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -56,15 +59,30 @@
 	<bean id="purchaseAction" class="com.action.PurchaseAction" scope="prototype">
 		<property name="purchaseService" ref="purchaseService"></property>
 		<property name="addressService" ref="addressService"></property>
+		<property name="userIncomeService" ref="userIncomeService"></property>
+		<property name="goodsService" ref="goodsService"></property>		
 	</bean>
 	<bean id="addressAction" class="com.action.AddressAction" scope="prototype">
 		<property name="addressService" ref="addressService"></property>
 	</bean>
 	<bean id="userAction" class="com.action.UserAction" scope="prototype">
 		<property name="userService" ref="userService"></property>
+		<property name="goodsService" ref="goodsService"></property>
 	</bean>
 	<bean id="tgfAction" class="com.action.TgfAction" scope="prototype">
 		<property name="tgfService" ref="tgfService"></property>
+	</bean>
+	<bean id="userIncomeAction" class="com.action.UserIncomeAction" scope="prototype">
+		<property name="userIncomeService" ref="userIncomeService"></property>
+		<property name="userService" ref="userService"></property>
+		<property name="goodsService" ref="goodsService"></property>
+	</bean>
+	<bean id="transactionAction" class="com.action.TransactionAction" scope="prototype">
+		<property name="transactionService" ref="transactionService"></property>
+		<property name="purchaseService" ref="purchaseService"></property>
+	</bean>
+	<bean id="managerAction" class="com.action.ManagerAction" scope="prototype">
+		<property name="managerService" ref="managerService"></property>
 	</bean>
 	
 	<!-- 配置业务层service --> 
@@ -83,6 +101,16 @@
 	<bean id="tgfService" class="com.service.impl.TgfServiceImpl">
 		<property name="tgfDao" ref="tgfDao"></property>
 	</bean>
+	<bean id="userIncomeService" class="com.service.impl.UserIncomeServiceImpl">
+		<property name="userIncomeDao" ref="userIncomeDao"></property>
+	</bean>
+	<bean id="transactionService" class="com.service.impl.TransactionServiceImpl">
+		<property name="transactionDao" ref="transactionDao"></property>
+	</bean>
+	<bean id="managerService" class="com.service.impl.ManagerServiceImpl">
+		<property name="managerDao" ref="managerDao"></property>
+	</bean>
+	
 	
 	<!-- 配置dao -->
 	<bean id="goodsDao" class="com.dao.impl.GoodsDaoImpl">
@@ -98,6 +126,15 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	<bean id="tgfDao" class="com.dao.impl.TgfDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="userIncomeDao" class="com.dao.impl.UserIncomeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="transactionDao" class="com.dao.impl.TransactionDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="managerDao" class="com.dao.impl.ManagerDaoImpl">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	

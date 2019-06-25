@@ -12,7 +12,7 @@ package com.entity;
 
 public class Address {
 	
-	private int id;
+	private int addressID;
 	private String id1;
 	private String region;
 	private String tel;
@@ -25,9 +25,9 @@ public class Address {
 		
 	}
 	
-	public Address(int id,String id1,String region,String tel,String name,int first_choice,String address){
+	public Address(int addressID,String id1,String region,String tel,String name,int first_choice,String address){
 		super();
-		this.id = id;
+		this.addressID = addressID;
 		this.id1 = id1;
 		this.region = region;
 		this.tel = tel;
@@ -35,11 +35,11 @@ public class Address {
 		this.first_choice = first_choice;
 		this.address = address;
 	}
-	public int getId() {
-		return id;
+	public int getAddressID() {
+		return addressID;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setAddressID(int addressID) {
+		this.addressID = addressID;
 	}
 	public String getId1() {
 		return id1;

@@ -3,7 +3,9 @@ package com.service.impl;
 import java.util.List;
 
 import com.dao.PurchaseDao;
+import com.entity.ExpenseIncome;
 import com.entity.PageBean;
+import com.entity.Pager;
 import com.entity.Purchase;
 import com.service.PurchaseService;
 
@@ -67,9 +69,9 @@ public class PurchaseServiceImpl implements PurchaseService{
 	public PageBean<Purchase> findByPage(Integer currPage) {
 		System.out.println("service层方法启动");
           PageBean<Purchase> pageBean = new PageBean<Purchase>();
-//        // 封装当前页数
+        // 封装当前页数
           pageBean.setCurrPage(currPage);
-//        // 封装每页记录数
+        // 封装每页记录数
           int pageSize = 10;
           pageBean.setPageSize(pageSize);
         // 封装总记录数
@@ -120,13 +122,22 @@ public class PurchaseServiceImpl implements PurchaseService{
       pageBean.setList(list);
 	  return pageBean;
 	}
+
+	@Override
+	public List<ExpenseIncome> getSumByMonth() {
+		// TODO Auto-generated method stub
+		if(purchaseDao.getSumByMonth() == null){
+			return null;
+		}
+		return purchaseDao.getSumByMonth();
+	}
 	
 	
-//	public Pager<Purchase> findByPage(Purchase searchModel, int pageNum, int pageSize) {
-//		System.out.println("service层方法启动");
-//		
-//		Pager<Purchase> result = (Pager<Purchase>) purchaseDao.findByPage(searchModel, pageNum, pageSize);
-//		
-//		return result;
-//	}
+	public Pager<Purchase> findByPage2(Purchase searchModel, int pageNum, int pageSize) {
+		System.out.println("service层方法启动");
+		
+		Pager<Purchase> result = (Pager<Purchase>) purchaseDao.findByPage2(searchModel, pageNum, pageSize);
+		
+		return result;
+	}
 }

@@ -124,7 +124,7 @@ public class GoodsDaoImpl extends HibernateDaoSupport implements GoodsDao{
 		@SuppressWarnings("unchecked")
 		List<GoodsInfo> goodslist=this.getHibernateTemplate().find(hql,goods_id);
 		if(goodslist.size()!=0){
-			System.out.println("查询成功");						
+			//System.out.println("查询成功");						
 			return goodslist;
 		}else if(goodslist.size()==0){
 			return null;

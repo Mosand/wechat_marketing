@@ -2,7 +2,9 @@ package com.service;
 
 import java.util.List;
 
+import com.entity.ExpenseIncome;
 import com.entity.PageBean;
+import com.entity.Pager;
 import com.entity.Purchase;
 
 public interface PurchaseService {
@@ -18,6 +20,8 @@ public interface PurchaseService {
 	PageBean<Purchase> findByPage(Integer currPage);
 	
 	PageBean<Purchase> findByPage(Purchase searchModel,Integer currPage);
+
+	List<ExpenseIncome> getSumByMonth();
 	
-	//Pager<Purchase> findByPage(Purchase searchModel, int pageNum, int pageSize);
+	Pager<Purchase> findByPage2(Purchase searchModel, int pageNum, int pageSize);
 }

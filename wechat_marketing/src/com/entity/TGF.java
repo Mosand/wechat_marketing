@@ -10,15 +10,17 @@ public class TGF {
 	private float tuiguangfei4;
 	private float tuiguangfei5;
 	private float tuiguangfei6;
+	private float tuiguangfei;
 	
 	public TGF(){
 		
 	}
 
-	public TGF(int goods_id,int id,float tuiguangfei1,float tuiguangfei2,float tuiguangfei3,float tuiguangfei4,float tuiguangfei5,float tuiguangfei6){
+	public TGF(int goods_id,int id,float tuiguangfei,float tuiguangfei1,float tuiguangfei2,float tuiguangfei3,float tuiguangfei4,float tuiguangfei5,float tuiguangfei6){
 		super();
 		this.goods_id = goods_id;
 		this.id = id;
+		this.tuiguangfei = tuiguangfei;
 		this.tuiguangfei1 = tuiguangfei1;
 		this.tuiguangfei2 = tuiguangfei2;
 		this.tuiguangfei3 = tuiguangfei3;
@@ -89,6 +91,14 @@ public class TGF {
 
 	public void setTuiguangfei6(float tuiguangfei6) {
 		this.tuiguangfei6 = tuiguangfei6;
+	}
+
+	public float getTuiguangfei() {
+		return tuiguangfei;
+	}
+
+	public void setTuiguangfei(float tuiguangfei) {
+		this.tuiguangfei = tuiguangfei;
 	}
 
 	

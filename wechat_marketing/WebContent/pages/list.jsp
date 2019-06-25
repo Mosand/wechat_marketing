@@ -16,6 +16,22 @@ thead {
 }
 </style>
 </head>
+<%
+	// 获取请求的上下文
+	String context = request.getContextPath();
+%>
+<link href="${pageContext.request.contextPath}/css/pagination.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.pagination.js"></script>
+<script type="text/javascript">
+// 点击分页按钮以后触发的动作
+function handlePaginationClick(new_page_index, pagination_container) {
+	$("#proForm").attr("action", "<%=context %>/product_findAll.action?pageNum=" + (new_page_index +1));
+	$("#proForm").submit();
+	return false;
+}
+
+</script>
 <body>     
 	<table border="0" width="900px">
 		<tr>
@@ -40,18 +56,10 @@ thead {
 			<s:iterator value="list" var="d">
 				<tr>
 					<td align="center"><s:property value="#d.username" /></td>
-					<td align="center">
-					   <!-- 编辑部门update-->
-					   <a href="department_findById.action?did=<s:property value="#d.goods_name"/>">
-					      <img src="${pageContext.request.contextPath }/images/mark.png" />
-					   </a>
-					</td>
-					<td align="center">
-					    <!-- 删除部门 -->
-					    <a href="department_delete.action?did=<s:property value="#d.did"/>">
-					       <img src="${pageContext.request.contextPath }/images/trash.gif" />
-					    </a>
-				    </td>
+					<td align="center"><s:property value="#d.direction" /></td>
+					<td align="center"><s:property value="#d.goods_name" /></td>
+					<td align="center"><s:property value="#d.totalticheng" /></td>
+					<td align="center"><s:property value="#d.totalmarket_price" /></td>
 				</tr>
 			</s:iterator>
 		</tbody>
@@ -68,17 +76,19 @@ thead {
 			    总记录数：<s:property value="totalCount" />&nbsp;&nbsp;
 			    每页显示:<s:property value="pageSize" /></span>&nbsp;&nbsp; 
 			<span>
-			   <s:if test="currPage != 1">			     
-					<a href="purchase_findDealByNameandTime.action?currPage=1">[首页]</a>&nbsp;&nbsp;
-                    <a href="purchase_findDealByNameandTime.action?currPage=<s:property value="currPage-1"/>">[上一页]</a>&nbsp;&nbsp;
+			   <s:if test="currPage != 1">
+					<a href="transaction_findTransactionByNameandTime.action?currPage=1">[首页]</a>&nbsp;&nbsp;
+                    <a href="transaction_findTransactionByNameandTime.action?currPage=<s:property value="currPage-1"/>">[上一页]</a>&nbsp;&nbsp;
                </s:if> 
                <s:if test="currPage != totalPage">
-					<a href="purchase_findDealByNameandTime.action?currPage=<s:property value="currPage+1"/>">[下一页]</a>&nbsp;&nbsp;
-                    <a href="purchase_findDealByNameandTime.action?currPage=<s:property value="totalPage"/>">[尾页]<s:property value="totalPage"/></a>&nbsp;&nbsp;
+					<a href="transaction_findTransactionByNameandTime.action?currPage=<s:property value="currPage+1"/>">[下一页]</a>&nbsp;&nbsp;
+                    <a href="transaction_findTransactionByNameandTime.action?currPage=<s:property value="totalPage"/>">[尾页]<s:property value="totalPage"/></a>&nbsp;&nbsp;
                </s:if> 
             </span>
             </td>
 		</tr>
 	</table>
+	
+	
 </body>
 </html>
