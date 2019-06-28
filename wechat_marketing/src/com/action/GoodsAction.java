@@ -37,6 +37,7 @@ public class GoodsAction extends ActionSupport{
 	private String goods_image;
 	private String describe_goods;
 	private float market_price;
+	private String imgFormat;
 	
 	private float tuiguangfei;
 	private float tuiguangfei1;
@@ -110,10 +111,14 @@ public class GoodsAction extends ActionSupport{
     public void setLists(List<GoodsInfo> lists) {
         this.lists = lists;
     }
-	
     
-    
-    public String getGoods_name() {
+    public String getImgFormat() {
+		return imgFormat;
+	}
+	public void setImgFormat(String imgFormat) {
+		this.imgFormat = imgFormat;
+	}
+	public String getGoods_name() {
 		return goods_name;
 	}
 
@@ -284,13 +289,15 @@ public class GoodsAction extends ActionSupport{
     	
     	//goods_id = goodsInfo.getGoods_id();
     	System.out.println("goods_id:"+goods_id);
-    	String path="WebContent/goods_image";
+    	String path="/goods_image";
 	    String target=ServletActionContext.getServletContext().getRealPath(path);
 	    if(file1FileName != null){	    	
 	    	GoodsInfo goodsInfo = new GoodsInfo();
 	    	String prefix=file1FileName.substring(file1FileName.lastIndexOf(".")+1);//获取图片后缀
 	    	String goodsid = String.valueOf(goods_id);	    	
 	    	file1FileName = file1FileName.replaceFirst(file1FileName, goodsid+"."+prefix);//以goods_id+后缀命名图片名字
+	    	imgFormat = file1FileName;
+	    	goodsInfo.setImgFormat(imgFormat);
 	    	File destFile=new File(target,file1FileName); 	
 		    System.out.println("destFile:"+destFile);
 		    //把上传的文件，拷贝到目标文件中
@@ -300,14 +307,15 @@ public class GoodsAction extends ActionSupport{
 			goodsInfo.setGoods_image(goods_image);
 	    }
 	    if(file1FileName == null){
-	    	File destFile=new File(target,"demo.png");
-	    	//FileUtils.copyFile(file1, destFile);
 		    GoodsInfo goodsInfo = new GoodsInfo();
-		    goods_image=destFile.getPath();
+		    goods_image = goodsService.findItem(goods_id).get(0).getGoods_image();
+		    imgFormat = goodsService.findItem(goods_id).get(0).getImgFormat();
 			System.out.println("goods_url:"+goods_image);
+			System.out.println("imgFormat:"+imgFormat);
 			goodsInfo.setGoods_image(goods_image);
+			goodsInfo.setImgFormat(imgFormat);
 	    }
-    	String result = goodsService.updateGoods(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price);
+    	String result = goodsService.updateGoods(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price,imgFormat);
     	String result2 = tgfService.updateTgf(goods_id,tuiguangfei,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
 		if(result2.equals(com.service.impl.TgfServiceImpl.SUCCESS)){//search success
 			inputStream = new ByteArrayInputStream("updateSuccess"  
@@ -352,18 +360,19 @@ public class GoodsAction extends ActionSupport{
     public String addGoods() throws IOException{
     	
     	System.out.println("action.addGoods方法执行");   
-    	String path="WebContent/goods_image";
+    	String path="/goods_image";
 	    String target=ServletActionContext.getServletContext().getRealPath(path);
 	    if(file1FileName == null){
-	    	File destFile=new File(target,"demo.png");
-	    	//FileUtils.copyFile(file1, destFile);
+//	    	File destFile=new File(target,"demo.png");
+//	    	//FileUtils.copyFile(file1, destFile);
 		    GoodsInfo goodsInfo = new GoodsInfo();
-		    goods_image=destFile.getPath();
+		    goods_image = null;
+		    imgFormat = null;
 			System.out.println("goods_url:"+goods_image);
 			goodsInfo.setGoods_image(goods_image);
+			goodsInfo.setImgFormat(imgFormat);
 	    }
-    	String result = goodsService.addGoods(goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price);
-    	
+	    String result = goodsService.addGoods(goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price,imgFormat); 
     	if(file1FileName != null){ 
 	    	GoodsInfo goodsInfo = new GoodsInfo();
 	    	goods_id = goodsService.findGoodsId();
@@ -371,6 +380,8 @@ public class GoodsAction extends ActionSupport{
 	    	String prefix=file1FileName.substring(file1FileName.lastIndexOf(".")+1);
 	    	String goodsid = String.valueOf(goods_id);	    	
 	    	file1FileName = file1FileName.replaceFirst(file1FileName, goodsid+"."+prefix);//以goods_id加后缀命名图片名字
+	    	imgFormat = file1FileName;
+	    	goodsInfo.setImgFormat(imgFormat);
 	    	System.out.println("file name: "+file1FileName);
 	    	File destFile=new File(target,file1FileName);	    	
 		    System.out.println("destFile:"+destFile);
@@ -399,7 +410,7 @@ public class GoodsAction extends ActionSupport{
 		}
     	System.out.println("goods_id:"+goods_id);
     	System.out.println("goods_url:"+goods_image);
-    	String result2 = goodsService.upload(goods_id,goods_image);//上传图片
+    	String result2 = goodsService.upload(goods_id,goods_image,imgFormat);//上传图片
 		if(result2.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){//search success
 			inputStream = new ByteArrayInputStream("addSuccess"  
                     .getBytes("UTF-8")); 			
@@ -429,7 +440,7 @@ public class GoodsAction extends ActionSupport{
 		    goods_image=destFile.getPath();
 			System.out.println("goods_url:"+goods_image);
 			goodsInfo.setGoods_image(goods_image);
-			String result=goodsService.upload(goods_id,goods_image);
+			String result=goodsService.upload(goods_id,goods_image,imgFormat);
 			if(result.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){//search success
 				inputStream = new ByteArrayInputStream("uploadSuccess"  
 	                    .getBytes("UTF-8")); 

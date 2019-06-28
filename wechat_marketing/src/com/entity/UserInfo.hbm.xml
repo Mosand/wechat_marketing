@@ -15,5 +15,6 @@
            <property name="erweima" column="erweima"></property>
            <property name="username" column="username"></property>
            <property name="avatar_url" column="avatar_url"></property>
+           <property name="erweimaFormat" column="erweimaFormat"></property>
      </class>
 </hibernate-mapping>

@@ -37,7 +37,7 @@
 <div class="leftnav">
 	<ul class="nav nav-pills nav-stacked">
 	  <li class="selected"><a href="#" style="color: #333;">产品管理</a></li>
-	  <li><a href="userincome_findAllIncome.action">用户管理</a></li>
+	  <li><a href="userincome_findAll">用户管理</a></li>
 	  <li><a href="${webContent}pages/compa_table_1.jsp">公司报表</a></li>
 	</ul>
 </div>
@@ -60,7 +60,13 @@
 				$("#product_panel").html("");
 				if(list.length != 0) {
 					for (var i = 0; i < list.length; i++) {
-						$("#product_panel").append("<div class='panel product_item'><input type='hidden' id='producuItem_"+list[i].goods_id+"'/><img src='"+list[i].goods_image+"' class='img-rounded img_click'/><div class='product_heading'><h3 class='panel-title'>"+list[i].goods_name+"&nbsp;&nbsp;<span>"+list[i].price+"</span></h3></div></div>");
+						var imgurl="";
+						if (list[i].imgFormat!=null||""){
+							imgurl="<img src='${webContent}goods_image/"+list[i].imgFormat;
+						}
+						else {imgurl="<img src='${webContent}img/none.png";}
+	
+						$("#product_panel").append("<div class='panel product_item'><input type='hidden' id='producuItem_"+list[i].goods_id+"'/>"+imgurl+"' class='img-rounded img_click'/><div class='product_heading'><h3 class='panel-title'>"+list[i].goods_name+"&nbsp;&nbsp;<span>"+list[i].price+"</span></h3></div></div>");
 					}
 				}
 				$("#product_panel").append("<div class='product_item'><a data-target='#add_product' data-toggle='modal'><img src='${webContent}img/add_product.png'/></a></div>");
@@ -74,9 +80,12 @@
 			           dataType: "json",
 			           data: {"goods_id": productItem},
 			           success: function (list) {
-			        	$('#itemOperate').html("");   
+			        	$('#itemOperate').html("");
 			        	
-			        	$('#preimg').attr("src",list[0].goods_image);
+						if (list[0].imgFormat!=null||""){
+					        $('#preimg').attr("src","${webContent}goods_image/"+list[0].imgFormat);
+						}			        	
+
 			        	$('#goods_id').attr("value",list[0].goods_id);			        	
 			        	$('#goods_name').attr("value",list[0].goods_name);
 			        	$('#price').attr("value",list[0].price);		        	
@@ -153,8 +162,8 @@ $(document).ready(function() {
                </h4>
            </div>
            <div class="modal-body">
-			   <div class="user_img">
-				   <img id="preimg" src="${webContent}img/add_product.png" alt="user_img"/>
+			   <div class="product_img">
+				   <img id="preimg" src="${webContent}img/none.png" alt="product_img"/>
 				   <input id="newimg" type="file" name="file1" onchange="previewFile()" /> 　　　 　
 			   </div>   
 			   <input type="hidden" name="goods_id" id="goods_id"/>			         
@@ -256,7 +265,7 @@ $(document).ready(function() {
             reader.readAsDataURL(file);
         } else {
             // 图片文件是空的
-            preview.src = "${webContent}img/add_product.png";
+            preview.src = "${webContent}img/none.png";
         }
     }
 </script>
@@ -274,8 +283,8 @@ $(document).ready(function() {
                </h4>
            </div>
            <div class="modal-body">
-			   <div class="user_img">
-				   <img id="demoimg" src="${webContent}img/add_product.png" alt="user_img"/>
+			   <div class="product_img">
+				   <img id="demoimg" src="${webContent}img/add_product.png" alt="product_img"/>
 				   <input id="selectimg" type="file" name="file1" onchange="previewFile0()" /> 　　　 　
 			   </div>         
                <div class="form-group">

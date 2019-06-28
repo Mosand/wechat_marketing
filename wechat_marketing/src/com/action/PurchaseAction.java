@@ -45,7 +45,7 @@ public class PurchaseAction extends ActionSupport implements ModelDriven<Purchas
 	private String time;
 	private int state;
 	private String avatar_url;
-	private String goods_image;
+	private String imgFormat;
 	private String deal_num;
 	private int addressID;
 	private String username;
@@ -142,12 +142,12 @@ public class PurchaseAction extends ActionSupport implements ModelDriven<Purchas
 		this.avatar_url = avatar_url;
 	}
 
-	public String getGoods_image() {
-		return goods_image;
+	public String getImgFormat() {
+		return imgFormat;
 	}
 
-	public void setGoods_image(String goods_image) {
-		this.goods_image = goods_image;
+	public void setImgFormat(String imgFormat) {
+		this.imgFormat = imgFormat;
 	}
 
 	public String getDeal_num() {
@@ -294,7 +294,7 @@ public class PurchaseAction extends ActionSupport implements ModelDriven<Purchas
 		}else if(result1 == com.service.impl.AddressServiceImpl.FAIL){
 			return null;
 		}
-		String result = purchaseService.saveDeal(id1,username,goods_id,goods_name,buy_num,spend,time,state,avatar_url,goods_image,deal_num,addressID);
+		String result = purchaseService.saveDeal(id1,username,goods_id,goods_name,buy_num,spend,time,state,avatar_url,imgFormat,deal_num,addressID);
 		if(result.equals(com.service.impl.PurchaseServiceImpl.SUCCESS)){
 			 inputStream = new ByteArrayInputStream("success"  
 	                    .getBytes("UTF-8"));

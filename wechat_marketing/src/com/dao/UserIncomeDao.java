@@ -29,6 +29,6 @@ public interface UserIncomeDao {
 
 	List<Object> findByPage(UserIncome searchModel, int begin, int pageSize);
 
-	Pager<UserIncome2> findByPage2(UserIncome searchModel, int pageNum, int pageSize);
+	Pager<Object> findByPage2(UserIncome searchModel, int pageNum, int pageSize);
 
 }

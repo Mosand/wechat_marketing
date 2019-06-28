@@ -323,7 +323,7 @@ public class TransactionAction {
 	//支出报表 收入报表
 	public String findExpenseandIncome(){
 		
-		System.out.println("action.findExpense方法执行");
+		System.out.println("action.findExpenseandIncome方法执行");
 		if(transactionService.getSumByMonth() == null){
 			return "findExpenseFail";
 		}

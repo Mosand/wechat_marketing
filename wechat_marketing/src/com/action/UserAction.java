@@ -33,6 +33,7 @@ public class UserAction {
 	private String id7;
 	private String erweima;
 	private String avatar_url;
+	private String erweimaFormat;
 	
 	private UserService userService;
 	private GoodsService goodsService;
@@ -161,6 +162,12 @@ public class UserAction {
 	}
 	
 	
+	public String getErweimaFormat() {
+		return erweimaFormat;
+	}
+	public void setErweimaFormat(String erweimaFormat) {
+		this.erweimaFormat = erweimaFormat;
+	}
 	public GoodsService getGoodsService() {
 		return goodsService;
 	}
@@ -191,10 +198,10 @@ public class UserAction {
 		
 		System.out.println("action.findNextDeal方法执行");
 		
-		String result = userService.findDeal(id1,id2);
+		String result = userService.findDeal(id1);
 		if(result == com.service.impl.UserServiceImpl.SUCCESS){
-			lists = userService.findAllNextDeal(id1,id2);
-			ActionContext.getContext().put("user_id", id2);
+			lists = userService.findAllDirectDeal(id1);
+			ActionContext.getContext().put("user_id", id1);
 			ActionContext.getContext().put("user_name", username);
 			System.out.println("lists"+lists);
 			return "findSuccess";
@@ -211,30 +218,32 @@ public class UserAction {
 	public String saveErweima() throws IOException{
 		
 		System.out.println("action.saveErweima方法执行");
-		String path="WebContent/avatar_image";
+		String path="/erweima_image";
 	    String target=ServletActionContext.getServletContext().getRealPath(path);
 	    if(file1FileName != null){	    	
 	    	UserInfo userInfo = new UserInfo();
 	    	//String prefix=file1FileName.substring(file1FileName.lastIndexOf(".")+1);//获取图片后缀
 	    	//String goodsid = String.valueOf(goods_id);	    	
 	    	//file1FileName = file1FileName.replaceFirst(file1FileName, goodsid+"."+prefix);//以goods_id+后缀命名图片名字
-	    	File destFile=new File(target,file1FileName); 	
+	    	File destFile=new File(target,file1FileName);
+	    	erweimaFormat = file1FileName;
 		    System.out.println("destFile:"+destFile);
 		    //把上传的文件，拷贝到目标文件中
 		    FileUtils.copyFile(file1, destFile);		
 		    erweima=destFile.getPath();
 			System.out.println("erweima:"+erweima);
 			userInfo.setErweima(erweima);
+			userInfo.setErweimaFormat(erweimaFormat);
 	    }
 	    if(file1FileName == null){
-	    	File destFile=new File(target,"demo.png");
+	    	//File destFile=new File(target,"demo.png");
 	    	//FileUtils.copyFile(file1, destFile);
 	    	UserInfo userInfo = new UserInfo();
-	    	erweima=destFile.getPath();
+	    	erweima=null;
 			System.out.println("erweima:"+erweima);
 			userInfo.setErweima(erweima);
 	    }
-		String result = userService.saveErweima(id1,erweima);
+		String result = userService.saveErweima(id1,erweima,erweimaFormat);
 		if(result == com.service.impl.UserServiceImpl.SUCCESS){
 			inputStream = new ByteArrayInputStream("saveSuccess"  
                     .getBytes("UTF-8")); 

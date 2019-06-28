@@ -13,6 +13,6 @@ public interface UserIncomeService {
 
 	PageBean<Object> findByPage(UserIncome searchModel, Integer currPage);
 
-	Pager<UserIncome2> findByPage2(UserIncome searchModel, int pageNum, int pageSize);
+	Pager<Object> findByPage2(UserIncome searchModel, int pageNum, int pageSize);
 
 }

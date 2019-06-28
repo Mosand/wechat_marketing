@@ -20,9 +20,9 @@ public class PurchaseServiceImpl implements PurchaseService{
 	}
 	
 	@Override
-	public String saveDeal(String id1,String username,int goods_id,String goods_name,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num,int addressID) {
+	public String saveDeal(String id1,String username,int goods_id,String goods_name,int buy_num,float spend,String time,int state,String avatar_url,String imgFormat,String deal_num,int addressID) {
 		// TODO Auto-generated method stub
-		String result = purchaseDao.saveDeal(id1,username,goods_id,goods_name,buy_num,spend,time,state,avatar_url,goods_image,deal_num,addressID);
+		String result = purchaseDao.saveDeal(id1,username,goods_id,goods_name,buy_num,spend,time,state,avatar_url,imgFormat,deal_num,addressID);
 		if(result.equals("success")){
 			return SUCCESS;
 		}else if(result.equals("fail")){

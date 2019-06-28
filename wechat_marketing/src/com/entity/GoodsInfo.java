@@ -27,8 +27,9 @@ public class GoodsInfo {
 	private String goods_image;
 	private String describe_goods;
 	private float market_price;
+	private String imgFormat;
 	
-	public GoodsInfo(int goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods){
+	public GoodsInfo(int goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods,String imgFormat){
 		super();
 		this.goods_id = goods_id;
 		this.goods_name = goods_name;
@@ -40,6 +41,7 @@ public class GoodsInfo {
 		this.admin_num = admin_num;
 		this.goods_image = goods_image;
 		this.describe_goods = describe_goods;
+		this.imgFormat = imgFormat;
 	}
 	
 	public GoodsInfo(int goods_id){
@@ -126,6 +128,14 @@ public class GoodsInfo {
 
 	public void setMarket_price(float market_price) {
 		this.market_price = market_price;
+	}
+
+	public String getImgFormat() {
+		return imgFormat;
+	}
+
+	public void setImgFormat(String imgFormat) {
+		this.imgFormat = imgFormat;
 	}
 
 

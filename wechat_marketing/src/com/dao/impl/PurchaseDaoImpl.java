@@ -65,7 +65,7 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 	}
 	
 	@Override
-	public String saveDeal(String id1,String username,int goods_id,String goods_name,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num,int addressID){
+	public String saveDeal(String id1,String username,int goods_id,String goods_name,int buy_num,float spend,String time,int state,String avatar_url,String imgFormat,String deal_num,int addressID){
 		
 		deal_num = this.makeDeal(id1, time, deal_num);		
 		Session se =this.getSession();
@@ -74,8 +74,8 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 		username = this.findUsernameandAvatar(id1).get(0).getUsername();
 		avatar_url = this.findUsernameandAvatar(id1).get(0).getAvatar_url();
 		goods_name = this.findPriceandGoodsImage(goods_id).get(0).getGoods_name();
-		goods_image = this.findPriceandGoodsImage(goods_id).get(0).getGoods_image();
-		hql = "insert into purchase(id1, username,goods_id, goods_name,buy_num, spend, time, state, avatar_url, goods_image, deal_num,addressID) values(?,?,?,?,?,?,?,?,?,?,?,?)";
+		imgFormat = this.findPriceandGoodsImage(goods_id).get(0).getImgFormat();
+		hql = "insert into purchase(id1, username,goods_id, goods_name,buy_num, spend, time, state, avatar_url, imgFormat, deal_num,addressID) values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		Query query= se.createSQLQuery(hql);
 		query.setString(0, id1);
 		query.setString(1, username);
@@ -86,7 +86,7 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 		query.setString(6, time);
 		query.setInteger(7, state);
 		query.setString(8, avatar_url);
-		query.setString(9, goods_image);
+		query.setString(9, imgFormat);
 		query.setString(10, deal_num);
 		query.setInteger(11, addressID);
 		if(query.executeUpdate() == 1){

@@ -301,11 +301,6 @@ public class UserIncomeAction {
 		        // 商品名字参数
 		        HttpServletRequest request = ServletActionContext.getRequest();
 		        String username = request.getParameter("username");		   
-
-		        if(username == null|| username.equals("")){
-		        	System.out.println("username:"+username);
-		        	username.trim();
-		        }
 		        // 校验pageNum参数输入合法性
 		        String pageNumStr = request.getParameter("pageNum");
 		        System.out.println("前端给的pageNum是："+pageNumStr);
@@ -324,10 +319,10 @@ public class UserIncomeAction {
 		        // 组装模糊查询条件
 		        UserIncome searchModel = new UserIncome();
 		        searchModel.setUsername(username);		     
-		        System.out.println("==============Product对象==============");
+		        System.out.println("==============Userincome对象==============");
 		        System.out.println(searchModel);
 		        // 调用service 获取查询结果
-		        Pager<UserIncome2> result = userIncomeService.findByPage2(searchModel, pageNum, pageSize);
+		        Pager<Object> result = userIncomeService.findByPage2(searchModel, pageNum, pageSize);
 
 		        // 将pageBean存入值栈，供前端页面读取        
 		        ActionContext.getContext().getValueStack().push(result);
@@ -335,8 +330,8 @@ public class UserIncomeAction {
 		        ActionContext.getContext().getValueStack().push(searchModel);
 		        System.out.println("==============Pager对象==============");
 		        System.out.println(result);
-		        System.out.println("控制器方法完成");
 		        System.out.println("username:"+username);
+		        System.out.println("控制器方法完成");
 		        return "findAll";
 		    }	
 	

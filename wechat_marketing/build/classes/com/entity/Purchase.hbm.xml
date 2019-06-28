@@ -15,7 +15,7 @@
            <property name="time" column="time"></property>
            <property name="state" column="state"></property>
            <property name="avatar_url" column="avatar_url"></property>
-           <property name="goods_image" column="goods_image"></property>
+           <property name="imgFormat" column="imgFormat"></property>
            <property name="addressID" column="addressID"></property>
      </class>
 </hibernate-mapping>

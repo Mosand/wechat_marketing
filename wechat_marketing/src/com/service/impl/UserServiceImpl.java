@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public String findDeal(String id1,String id2) {
-		List<Purchase> purchaselist = userDao.findAllNextDeal(id1,id2);
+	public String findDeal(String id1) {
+		List<Purchase> purchaselist = userDao.findAllNextDeal(id1);
 		if(purchaselist==null){
 			return FAIL;
 		}else{
@@ -27,14 +27,14 @@ public class UserServiceImpl implements UserService{
 		}
 	}
 	@Override
-	public List<Purchase> findAllNextDeal(String id1,String id2) {
+	public List<Purchase> findAllDirectDeal(String id1) {
 		// TODO Auto-generated method stub
-		return userDao.findAllNextDeal(id1,id2);
+		return userDao.findAllNextDeal(id1);
 	}
 	
 	@Override
-	public String saveErweima(String id1,String erweima) {
-		String result = userDao.saveErweima(id1,erweima);
+	public String saveErweima(String id1,String erweima,String erweimaFormat) {
+		String result = userDao.saveErweima(id1,erweima,erweimaFormat);
 		if(result == "success"){
 			return SUCCESS;
 		}else if(result.equals("fail")){

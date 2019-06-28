@@ -7,11 +7,11 @@ import com.entity.UserInfo;
 
 public interface UserService {
 	
-	String findDeal(String id1,String id2);
+	String findDeal(String id1);
 	
-	List<Purchase> findAllNextDeal(String id1,String id2);
+	List<Purchase> findAllDirectDeal(String id1);
 	
-	String saveErweima(String id1,String erweima);
+	String saveErweima(String id1,String erweima,String erweimaFormat);
 
 	String findErweima(String deal_num);
 	

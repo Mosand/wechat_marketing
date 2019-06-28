@@ -11,7 +11,7 @@ package com.entity;
  * state：状态
  * avatar_url：顾客头像
  * admin_num：Admin达标线
- * goods_image:商品图片
+ * imgFormat:商品图片
  * deal_num：交易流水号
  */
 
@@ -26,7 +26,7 @@ public class Purchase {
 	private String time;
 	private int state;
 	private String avatar_url;
-	private String goods_image;
+	private String imgFormat;
 	private String deal_num;
 	private int addressID;
 	
@@ -34,7 +34,7 @@ public class Purchase {
 		
 	}
 	
-	public Purchase(String id1,String username,int goods_id,String goods_name,int buy_num,float spend,String time,int state,String avatar_url,String goods_image,String deal_num){
+	public Purchase(String id1,String username,int goods_id,String goods_name,int buy_num,float spend,String time,int state,String avatar_url,String imgFormat,String deal_num){
 		super();
 		this.id1 = id1;
 		this.username = username;
@@ -45,7 +45,7 @@ public class Purchase {
 		this.time = time;
 		this.state = state;
 		this.avatar_url = avatar_url;
-		this.goods_image = goods_image;
+		this.imgFormat = imgFormat;
 		this.deal_num = deal_num;
 	}
 
@@ -114,12 +114,14 @@ public class Purchase {
 		this.avatar_url = avatar_url;
 	}
 
-	public String getGoods_image() {
-		return goods_image;
+	
+
+	public String getImgFormat() {
+		return imgFormat;
 	}
 
-	public void setGoods_image(String goods_image) {
-		this.goods_image = goods_image;
+	public void setImgFormat(String imgFormat) {
+		this.imgFormat = imgFormat;
 	}
 
 	public String getDeal_num() {

@@ -92,10 +92,10 @@ public class UserIncomeServiceImpl implements UserIncomeService{
 	}
 
 	
-	public Pager<UserIncome2> findByPage2(UserIncome searchModel, int pageNum, int pageSize) {
+	public Pager<Object> findByPage2(UserIncome searchModel, int pageNum, int pageSize) {
 		System.out.println("service²ã·½·¨Æô¶¯");
 		
-		Pager<UserIncome2> result = (Pager<UserIncome2>) userIncomeDao.findByPage2(searchModel, pageNum, pageSize);
+		Pager<Object> result = (Pager<Object>) userIncomeDao.findByPage2(searchModel, pageNum, pageSize);
 		
 		return result;
 	}

@@ -233,7 +233,7 @@
 			<result name="findAll2">/pages/user_mana_1.jsp</result>
 			<result name="findSuccess">/pages/user_mana_1.jsp</result>  
 			<result name="findFail">/pages/user_mana_1.jsp</result>
-			<result name="findAll">/show6.jsp</result>
+			<result name="findAll">/pages/user_mana_1.jsp</result>
 		</action>
 		
 		<action name="transaction_*" class="transactionAction" method="{1}">

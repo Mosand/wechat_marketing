@@ -32,12 +32,13 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 	
 	@Override
-	public String updateGoods(int goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods,float market_price){
+	public String updateGoods(int goods_id,String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,
+			String describe_goods,float market_price,String imgFormat){
 		
-		String result = goodsDao.update(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price);
+		String result = goodsDao.update(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price,imgFormat);
 		if(result == "success"){
 			return SUCCESS;
-		}else if(result.equals("fail")){
+		}else if(result =="fail"){
 			return FAIL;
 		}
 			return null;
@@ -56,9 +57,10 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 	
 	@Override
-	public String addGoods(String goods_name,float price,float ticheng,float reward,int reward_num,float admin,int admin_num,String goods_image,String describe_goods,float market_price){
+	public String addGoods(String goods_name,float price,float ticheng,float reward,int reward_num,
+			float admin,int admin_num,String goods_image,String describe_goods,float market_price,String imgFormat){
 		
-		String result = goodsDao.add(goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price);
+		String result = goodsDao.add(goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price,imgFormat);
 		if(result == "success"){
 			return SUCCESS;
 		}else if(result.equals("fail")){
@@ -68,8 +70,8 @@ public class GoodsServiceImpl implements GoodsService{
 	}
 	
 	@Override
-	public String upload(int goods_id,String goods_image){
-		String result = goodsDao.upload(goods_id,goods_image);
+	public String upload(int goods_id,String goods_image,String imgFormat){
+		String result = goodsDao.upload(goods_id,goods_image,imgFormat);
 		if(result == "success"){
 			return SUCCESS;
 		}else if(result.equals("fail")){

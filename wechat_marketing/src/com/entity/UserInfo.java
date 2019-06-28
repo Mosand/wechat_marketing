@@ -25,12 +25,13 @@ public class UserInfo {
 	private String erweima;
 	private String username;
 	private String avatar_url;
+	private String erweimaFormat;
 	
 	public UserInfo(){
 		
 	}
 	
-	public UserInfo(String id1,String id2,String id3,String id4,String id5,String id6,String id7,String erweima,String username,String avatar_url){
+	public UserInfo(String id1,String id2,String id3,String id4,String id5,String id6,String id7,String erweima,String username,String avatar_url,String erweimaFormat){
 		super();
 		this.id1 = id1;
 		this.id2 = id2;
@@ -42,6 +43,7 @@ public class UserInfo {
 		this.erweima = erweima;
 		this.username = username;
 		this.avatar_url = avatar_url;
+		this.erweimaFormat = erweimaFormat;
 		
 	}
 	
@@ -108,6 +110,14 @@ public class UserInfo {
 
 	public void setAvatar_url(String avatar_url) {
 		this.avatar_url = avatar_url;
+	}
+
+	public String getErweimaFormat() {
+		return erweimaFormat;
+	}
+
+	public void setErweimaFormat(String erweimaFormat) {
+		this.erweimaFormat = erweimaFormat;
 	}
 	
 	

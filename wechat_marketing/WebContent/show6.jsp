@@ -65,21 +65,58 @@ $(function(){
 				style="border-collapse: collapse">
 				<thead>
 					<tr height="30">
-				<td align="center">商品编号</td>
-				<td align="center">商品名称</td>
-				<td align="center">商品价格</td>
+				
+				<td align="center">用户名</td>
+				<td align="center">商品名</td>
+				<td align="center">应得提成</td>
+				<td align="center">已得提成</td>
+				<td align="center">应得市场费</td>
+				<td align="center">已得市场费</td>
+				<td align="center">应得奖励</td>
+				<td align="center">已得奖励</td>
+				<td align="center">应得admin奖金</td>
+				<td align="center">已得admin奖金</td>
+				<td align="center">deal_num</td>
 					</tr>
 				</thead>
-					<c:forEach items="${dataList}" var="p">
-						<tr>											
-							
+					
+						<tr>
+																									
+							<td><c:out value="${dataList[0][1]}"></c:out></td>
+							<td><c:out value="${dataList[0][8]}"></c:out></td>							
+							<td><c:out value="${dataList[0][3]}"></c:out></td>
+							<td><c:out value="${dataList[0][11]}"></c:out></td>
+							<td><c:out value="${dataList[0][4]}"></c:out></td>
+							<td><c:out value="${dataList[0][13]}"></c:out></td>
+							<td><c:out value="${dataList[0][5]}"></c:out></td>																									
+							<td><c:out value="${dataList[0][15]}"></c:out></td>
+							<td><c:out value="${dataList[0][6]}"></c:out></td>
+							<td><c:out value="${dataList[0][17]}"></c:out></td>
+							<td><c:out value="${dataList[0][9]}"></c:out></td>
 						</tr>
-					</c:forEach>
+						<tr>
+																								
+							<td><c:out value="${dataList[1][1]}"></c:out></td>
+							<td><c:out value="${dataList[1][8]}"></c:out></td>							
+							<td><c:out value="${dataList[1][3]}"></c:out></td>
+							<td><c:out value="${dataList[1][11]}"></c:out></td>
+							<td><c:out value="${dataList[1][4]}"></c:out></td>
+							<td><c:out value="${dataList[1][13]}"></c:out></td>
+							<td><c:out value="${dataList[1][5]}"></c:out></td>																									
+							<td><c:out value="${dataList[1][15]}"></c:out></td>
+							<td><c:out value="${dataList[1][6]}"></c:out></td>
+							<td><c:out value="${dataList[1][17]}"></c:out></td>
+							<td><c:out value="${dataList[1][9]}"></c:out></td>
+						</tr>
+					
 			</table>
 			<br> 
 			<div id="News-Pagination"></div>
 	</c:if>
-	
+	<span>
+			    总记录数：<s:property value="totalRecord" />&nbsp;&nbsp;
+			    每页显示:<s:property value="pageSize" /></span>&nbsp;&nbsp; 
+	<span>
 	<div>后台传来的当前页:${currentPage}</div>
 </body>
 </html>

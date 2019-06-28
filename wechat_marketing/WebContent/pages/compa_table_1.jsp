@@ -70,35 +70,35 @@ div{top:4px;!important}
 				//通过ajax请求菜单
 			
 				$.ajax({
-					url : './#',
+					url : './transaction_findExpenseandIncome',
 					type : 'POST',
 					dataType : 'json',
 					success : function(list) {
-						in1=list[0].in1;
-						in2=list[0].in2;
-						in3=list[0].in3;
-						in4=list[0].in4;
-						in5=list[0].in5;
-						in6=list[0].in6;
-						in7=list[0].in7;
-						in8=list[0].in8;
-						in9=list[0].in9;
-						in10=list[0].in10;
-						in11=list[0].in11;
-						in12=list[0].in12;
+						in1=list[0][4];
+						in2=list[1][4];
+						in3=list[2][4];
+						in4=list[3][4];
+						in5=list[4][4];
+						in6=list[5][4];
+						in7=list[6][4];
+						in8=list[7][4];
+						in9=list[8][4];
+						in10=list[9][4];
+						in11=list[10][4];
+						in12=list[11][4];
 						
-						out1=list[0].out1;
-						out2=list[0].out2;	
-						out3=list[0].out3;
-						out4=list[0].out4;	
-						out5=list[0].out5;
-						out6=list[0].out6;	
-						out7=list[0].out7;	
-						out8=list[0].out8;	
-						out9=list[0].out9;	
-						out10=list[0].out10;
-						out11=list[0].out11;
-						out12=list[0].out12;							
+						out1=list[0][3];
+						out2=list[1][3];	
+						out3=list[2][3];
+						out4=list[3][3];	
+						out5=list[4][3];
+						out6=list[5][3];	
+						out7=list[6][3];	
+						out8=list[7][3];	
+						out9=list[8][3];	
+						out10=list[9][3];
+						out11=list[10][3];
+						out12=list[11][3];							
 					},
 			});
 <!--catch_params-->			
