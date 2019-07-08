@@ -24,11 +24,10 @@
 </head>
 <body> 
 
-<!-- 登录接口 -->
-<!-- <%=request.getAttribute("user_id")%> <%=request.getAttribute("user_name")%>-->
+<!-- 登录接口 --> 
 <div class="login_icon">
       <ul class="nav navbar-nav navbar-right"> 
-          <li><a href="${webContent}pages/userIndex.jsp"><img src="${webContent}img/icon/main_man.png" />&nbsp;&nbsp;<%=request.getAttribute("user_name")%></a></li>
+          <li><a href="${webContent}pages/login.jsp"><img src="${webContent}img/icon/main_man.png" />&nbsp;&nbsp;<%=request.getAttribute("public_name")%></a></li>
       </ul> 
 </div>
 <div class="clear"></div>
@@ -38,7 +37,7 @@
 	<ul class="nav nav-pills nav-stacked">
 	  <li class="selected"><a href="#" style="color: #333;">产品管理</a></li>
 	  <li><a href="userincome_findAll">用户管理</a></li>
-	  <li><a href="${webContent}pages/compa_table_1.jsp">公司报表</a></li>
+	  <li><a href="transaction_compaPublic">公司报表</a></li>
 	</ul>
 </div>
 <!--end leftnav-->
@@ -51,14 +50,17 @@
 <script type="text/javascript">
 	$(function() {//预加载方法
 		//通过ajax请求菜单
-
+<%-- 		var user_name="<%=request.getAttribute("user_name")%>"; --%>
 		$.ajax({
 			url : './goods_searchGoods',
 			type : 'POST',
-			dataType : 'json',
+			dataType : 'json',	
+/* 	        data: {"user_name": user_name},	 */			
 			success : function(list) {
 				$("#product_panel").html("");
-				if(list.length != 0) {
+		
+				if(list.length!=0)
+				{
 					for (var i = 0; i < list.length; i++) {
 						var imgurl="";
 						if (list[i].imgFormat!=null||""){
@@ -69,7 +71,8 @@
 						$("#product_panel").append("<div class='panel product_item'><input type='hidden' id='producuItem_"+list[i].goods_id+"'/>"+imgurl+"' class='img-rounded img_click'/><div class='product_heading'><h3 class='panel-title'>"+list[i].goods_name+"&nbsp;&nbsp;<span>"+list[i].price+"</span></h3></div></div>");
 					}
 				}
-				$("#product_panel").append("<div class='product_item'><a data-target='#add_product' data-toggle='modal'><img src='${webContent}img/add_product.png'/></a></div>");
+				
+			   $("#product_panel").append("<div class='product_item'><a data-target='#add_product' data-toggle='modal'><img src='${webContent}img/add_product.png'/></a></div>");				
 
 			   $("img.img_click").click(function() {
 					var index1=$(this).siblings("input").attr("id");
@@ -80,11 +83,14 @@
 			           dataType: "json",
 			           data: {"goods_id": productItem},
 			           success: function (list) {
-			        	$('#itemOperate').html("");
+			        	$('#itemOperate').html("");				        				        	
 			        	
 						if (list[0].imgFormat!=null||""){
 					        $('#preimg').attr("src","${webContent}goods_image/"+list[0].imgFormat);
-						}			        	
+						}	
+						else{
+				        	$('#preimg').attr("src","${webContent}img/none.png");								
+						}
 
 			        	$('#goods_id').attr("value",list[0].goods_id);			        	
 			        	$('#goods_name').attr("value",list[0].goods_name);
@@ -96,6 +102,7 @@
 			        	$('#reward_num').attr("value",list[0].reward_num);
 			        	$('#admin').attr("value",list[0].admin);			        	
 			        	$('#admin_num').attr("value",list[0].admin_num);
+			        	$('#tuiguangfei').attr("value",list[1].tuiguangfei);			        	
 			        	$('#tuiguangfei1').attr("value",list[1].tuiguangfei1);
 			        	$('#tuiguangfei2').attr("value",list[1].tuiguangfei2);
 			        	$('#tuiguangfei3').attr("value",list[1].tuiguangfei3);
@@ -111,7 +118,7 @@
 			   });					
 			},
 			error : function(msg) {
-				alert(msg);
+				   $("#product_panel").append("<div class='product_item'><a data-target='#add_product' data-toggle='modal'><img src='${webContent}img/add_product.png'/></a></div>");	
 			}
 		});   
 	});
@@ -166,7 +173,8 @@ $(document).ready(function() {
 				   <img id="preimg" src="${webContent}img/none.png" alt="product_img"/>
 				   <input id="newimg" type="file" name="file1" onchange="previewFile()" /> 　　　 　
 			   </div>   
-			   <input type="hidden" name="goods_id" id="goods_id"/>			         
+			   <input type="hidden" name="goods_id" id="goods_id"/>	
+			   <input type="hidden" name="user_name" value="<%=request.getAttribute("user_name")%>"/>			         
                <div class="form-group">
                    <label for="">产品名称</label>
                    <input class="form-control" type="text" placeholder="" name="goods_name" id="goods_name">
@@ -210,7 +218,11 @@ $(document).ready(function() {
 					    <tr>
 					      <th>购买数量（盒）</th>
 					      <th>每盒推广费（元）</th>
-					    </tr>					  
+					    </tr>	
+					    <tr>
+					      <td>间接下线推广费</td>
+					      <td><input class="form-control" type="text" placeholder="" name="tuiguangfei" id="tuiguangfei"></td>
+					    </tr>					    				  
 					    <tr>
 					      <td>(0,20]</td>
 					      <td><input class="form-control" type="text" placeholder="" name="tuiguangfei1" id="tuiguangfei1"></td>
@@ -286,7 +298,8 @@ $(document).ready(function() {
 			   <div class="product_img">
 				   <img id="demoimg" src="${webContent}img/add_product.png" alt="product_img"/>
 				   <input id="selectimg" type="file" name="file1" onchange="previewFile0()" /> 　　　 　
-			   </div>         
+			   </div> 
+			   <input type="hidden" name="user_name" value="<%=request.getAttribute("user_name")%>"/>			           
                <div class="form-group">
                    <label for="">产品名称</label>
                    <input class="form-control" type="text" placeholder="" name="goods_name">
@@ -330,7 +343,11 @@ $(document).ready(function() {
 					    <tr>
 					      <th>购买数量（盒）</th>
 					      <th>每盒推广费（元）</th>
-					    </tr>					  
+					    </tr>
+					    <tr>
+					      <td>下线推广费</td>
+					      <td><input class="form-control" type="text" placeholder="" name="tuiguangfei" id="tuiguangfei"></td>
+					    </tr>					    					  
 					    <tr>
 					      <td>(0,20]</td>
 					      <td><input class="form-control" type="text" placeholder="" name="tuiguangfei1"></td>
@@ -369,7 +386,7 @@ $(document).ready(function() {
 </form> 
 <!--end add_product_modal -->
 
-<script>
+<script type="text/javascript">
     function previewFile0() {
         var preview0=document.getElementById("demoimg");
         var file0=document.getElementById("selectimg").files[0];

@@ -110,6 +110,7 @@ public class AddressAction {
 		
 		System.out.println("action.findAddress方法执行");
 		String result = addressService.findAddress(id1);
+		System.out.println("id1 是："+id1);
 		if(result == com.service.impl.AddressServiceImpl.SUCCESS){
 			lists = addressService.findOneAddress(id1);
 			Gson gson = new Gson();

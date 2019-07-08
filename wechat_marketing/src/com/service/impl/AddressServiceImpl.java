@@ -76,6 +76,20 @@ public class AddressServiceImpl implements AddressService{
 		}
 			return FAIL;
 	}
+	@Override
+	public String findAddress2(String deal_num) {
+		// TODO Auto-generated method stub
+		List<Address> addresslist = addressDao.findAddressById(deal_num);
+		if(addresslist==null){
+			return FAIL;
+		}else
+			return SUCCESS;
+	}
+	@Override
+	public List<Address> findAddressById(String deal_num) {
+		// TODO Auto-generated method stub
+		return addressDao.findAddressById(deal_num);
+	}
 	
 	
 }

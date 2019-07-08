@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.dao.AddressDao;
 import com.entity.Address;
+import com.entity.Purchase;
 import com.entity.UserInfo;
 
 public class AddressDaoImpl extends HibernateDaoSupport implements AddressDao{
@@ -55,7 +56,7 @@ public class AddressDaoImpl extends HibernateDaoSupport implements AddressDao{
 		if(this.findUserById1(id1) == null){
 			return "fail";
 		}
-		name = this.findUserById1(id1).get(0).getUsername();
+		//name = this.findUserById1(id1).get(0).getUsername();
 		Session se =this.getSession();
 		String hql="";
 		
@@ -123,6 +124,27 @@ public class AddressDaoImpl extends HibernateDaoSupport implements AddressDao{
 			return "success";
 		}else
 			return "fail";
+	}
+
+	@Override
+	public List<Address> findAddressById(String deal_num) {
+		// TODO Auto-generated method stub
+		Session session = this.getSession();
+		String hql1 = "";
+		hql1 = "from purchase where deal_num=?";
+		List<Purchase> list=this.getHibernateTemplate().find(hql1,deal_num);
+		if(list.size()==0){
+			return null;
+		}else{
+			int addressID = list.get(0).getAddressID();
+			String hql2 = "";
+			hql2 = "from address where addressID=?";
+			Query query2 = session.createQuery(hql2);
+			query2.setInteger(0, addressID);
+			List<Address> list2 = query2.list();
+			return list2;
+		}
+		
 	}
 	
 }

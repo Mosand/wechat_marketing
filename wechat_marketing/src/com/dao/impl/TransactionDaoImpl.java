@@ -62,48 +62,92 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
 	}
 	
 	@Override
-	public String saveTransaction(String id1, String username, int goods_id, float ticheng, float market_price,
-			float reward, float admin, String serial_num, String time,String direction,String avatar_url,String goods_name) {
+	public String saveTransaction(String id1, String username, int goods_id, float money, String serial_num, String time,String direction,String avatar_url,String goods_name) {
 		serial_num = this.makeDeal(id1,time, serial_num);		
 		avatar_url = this.findAvatar(id1).get(0).getAvatar_url();
 		goods_name = this.findGoods(goods_id).get(0).getGoods_name();
 		Session se =this.getSession();
 		String hql="";
-		if(ticheng != 0){
-			direction = "提成费";
-		}else if(market_price != 0){
-			direction = "市场费";
-		}else if(reward != 0){
-			direction = "奖金";
-		}else if(admin !=0){
-			direction = "admin奖金";
+		System.out.println("money:"+money);
+		System.out.println("direction:"+direction);
+		if(direction.equals("提成费")){
+			float ticheng = money;
+			hql = "insert into transaction_record(id1,username,goods_id,ticheng,serial_num,time,direction,avatar_url,goods_name) values(?,?,?,?,?,?,?,?,?)";
+			Query query= se.createSQLQuery(hql);
+			query.setString(0, id1);
+			query.setString(1, username);
+			query.setInteger(2, goods_id);
+			query.setFloat(3, ticheng);
+			query.setString(4, serial_num);
+			query.setString(5, time);	
+			query.setString(6, direction);
+			query.setString(7, avatar_url);
+			query.setString(8, goods_name);
+			if(query.executeUpdate() == 1){
+				return "success";
+			}else
+				return "fail";
 		}
-		if(ticheng == 0 && market_price == 0 && reward == 0 && admin ==0){
-			return "fail";
+		if(direction.equals("市场费")){
+			float market_price = money;
+			hql = "insert into transaction_record(id1,username,goods_id,market_price,serial_num,time,direction,avatar_url,goods_name) values(?,?,?,?,?,?,?,?,?)";
+			Query query= se.createSQLQuery(hql);
+			query.setString(0, id1);
+			query.setString(1, username);
+			query.setInteger(2, goods_id);
+			query.setFloat(3, market_price);
+			query.setString(4, serial_num);
+			query.setString(5, time);	
+			query.setString(6, direction);
+			query.setString(7, avatar_url);
+			query.setString(8, goods_name);
+			if(query.executeUpdate() == 1){
+				return "success";
+			}else
+				return "fail";
 		}
-		hql = "insert into transaction_record(id1,username,goods_id,ticheng,market_price,reward,admin,serial_num,time,direction,avatar_url,goods_name) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-		Query query= se.createSQLQuery(hql);
-		query.setString(0, id1);
-		query.setString(1, username);
-		query.setInteger(2, goods_id);
-		query.setFloat(3, ticheng);
-		query.setFloat(4, market_price);
-		query.setFloat(5, reward);
-		query.setFloat(6, admin);
-		query.setString(7, serial_num);
-		query.setString(8, time);	
-		query.setString(9, direction);
-		query.setString(10, avatar_url);
-		query.setString(11, goods_name);
-		if(query.executeUpdate() == 1){
-			return "success";
-		}else
-			return "fail";
+		if(direction.equals("奖金")){
+			float reward = money;
+			hql = "insert into transaction_record(id1,username,goods_id,reward,serial_num,time,direction,avatar_url,goods_name) values(?,?,?,?,?,?,?,?,?)";
+			Query query= se.createSQLQuery(hql);
+			query.setString(0, id1);
+			query.setString(1, username);
+			query.setInteger(2, goods_id);
+			query.setFloat(3, reward);
+			query.setString(4, serial_num);
+			query.setString(5, time);	
+			query.setString(6, direction);
+			query.setString(7, avatar_url);
+			query.setString(8, goods_name);
+			if(query.executeUpdate() == 1){
+				return "success";
+			}else
+				return "fail";
+		}
+		if(direction.equals("admin奖金")){
+			float admin = money;
+			hql = "insert into transaction_record(id1,username,goods_id,admin,serial_num,time,direction,avatar_url,goods_name) values(?,?,?,?,?,?,?,?,?)";
+			Query query= se.createSQLQuery(hql);
+			query.setString(0, id1);
+			query.setString(1, username);
+			query.setInteger(2, goods_id);
+			query.setFloat(3, admin);
+			query.setString(4, serial_num);
+			query.setString(5, time);	
+			query.setString(6, direction);
+			query.setString(7, avatar_url);
+			query.setString(8, goods_name);
+			if(query.executeUpdate() == 1){
+				return "success";
+			}else
+				return "fail";
+		}
+		return "";
+		
 		
 	}
 
 
-//这个sql语句有点问题，还需要再写
 	@Override
 	public List<Object> findTransaction(int begin, int pageSize) {
 		// TODO Auto-generated method stub
@@ -301,7 +345,7 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
 			return this.findByPage3(pageNum, pageSize);
         }
         if((time == null || time.equals("")) && (username !=null || !username.equals(""))){
-			hql = new StringBuilder("from transaction_record where username =:username ");
+			hql = new StringBuilder("from transaction_record where username =:username order by time desc");
 			countHql = new StringBuilder("select count(*) from transaction_record where username =:username");			
 			paramMap.put("username", username);
 			// 起始索引
@@ -350,7 +394,7 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
 			
 		}
 		if((username == null || username.equals("")) && (time != null || !time.equals(""))){
-			hql = new StringBuilder("from transaction_record where time like :time");
+			hql = new StringBuilder("from transaction_record where time like :time order by time desc");
 			countHql = new StringBuilder("select count(*) from transaction_record where time like :time");
 			paramMap.put("time", time + "%");
 			// 起始索引
@@ -398,7 +442,7 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
 			return result;
 		}
 		else if (time != null && !time.equals("") && username != null && !username.equals("")) {
-			hql = new StringBuilder("from transaction_record where time like :time and username =:username ");
+			hql = new StringBuilder("from transaction_record where time like :time and username =:username order by time desc");
 			countHql = new StringBuilder("select count(*) from transaction_record where time like :time and username =:username");
 			paramMap.put("time", time + "%");
 			paramMap.put("username",username);
@@ -469,7 +513,7 @@ public class TransactionDaoImpl extends HibernateDaoSupport implements Transacti
 	public Pager<TransactionRecord> findByPage3(int pageNum, int pageSize) {
 		// TODO Auto-generated method stub
 		StringBuilder hql = new StringBuilder();
-		hql = new StringBuilder("from transaction_record");
+		hql = new StringBuilder("from transaction_record order by time desc");
 		
 		// 起始索引
 		int fromIndex = pageSize * (pageNum - 1);

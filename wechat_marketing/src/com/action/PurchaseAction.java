@@ -23,6 +23,7 @@ import com.entity.Address;
 import com.entity.PageBean;
 import com.entity.Pager;
 import com.entity.Purchase;
+import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -53,10 +54,20 @@ public class PurchaseAction extends ActionSupport implements ModelDriven<Purchas
 	private float market_price;
 	private float reward;
 	private float admin;
+	private String user_name;
 	private Purchase purchase;
+	
+	public Purchase getPurchase() {
+		return purchase;
+	}
+
+	public void setPurchase(Purchase purchase) {
+		this.purchase = purchase;
+	}
 	private AddressService addressService ;
 	private PurchaseService purchaseService;
 	private List<Purchase> lists = new ArrayList<Purchase>();
+	private List<Address> lists2 = new ArrayList<Address>();
 	private UserIncomeService userIncomeService;
 	private GoodsService goodsService;
 	
@@ -254,6 +265,22 @@ public class PurchaseAction extends ActionSupport implements ModelDriven<Purchas
 
 	
 	
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+
+	public List<Address> getLists2() {
+		return lists2;
+	}
+
+	public void setLists2(List<Address> lists2) {
+		this.lists2 = lists2;
+	}
+
 	public GoodsService getGoodsService() {
 		return goodsService;
 	}
@@ -289,6 +316,7 @@ public class PurchaseAction extends ActionSupport implements ModelDriven<Purchas
 			return null;
 		}else if(result1 == com.service.impl.AddressServiceImpl.SUCCESS){
 			list = addressService.findOneAddress(id1);
+			//addressID看是前端给我，还是我自己查，这里需要讨论，最好是给我
 			addressID = list.get(0).getAddressID();//根据id1查询address表中address的id，作为addressID
 			System.out.println("lists"+lists);		
 		}else if(result1 == com.service.impl.AddressServiceImpl.FAIL){
@@ -379,7 +407,7 @@ public class PurchaseAction extends ActionSupport implements ModelDriven<Purchas
 		// 使用的是模型驱动，把信息放入值栈中，可以使用OGNL表达式获取
 		ActionContext.getContext().getValueStack().push(pageBean);
 		
-		return "findSuccess";
+		return "findSuccess2";
 	}
 	
 	//最后我用的这种分页方法
@@ -424,6 +452,10 @@ public class PurchaseAction extends ActionSupport implements ModelDriven<Purchas
 	        System.out.println("==============Pager对象==============");
 	        System.out.println(result);
 	        System.out.println("控制器方法完成");
+	        HttpServletRequest request2 = ServletActionContext.getRequest();
+        	request2.setAttribute("public_name",ManagerAction.public_name);
+        	System.out.println("public_name:"+ManagerAction.public_name);
+        	
 	        return "findAll";
 	    }
 	
@@ -478,4 +510,70 @@ public class PurchaseAction extends ActionSupport implements ModelDriven<Purchas
 
         return NONE;
     }
+    
+    public String findAddress() throws UnsupportedEncodingException{
+    	
+    	System.out.println("action.findAddrss执行");
+    	String result = addressService.findAddress2(deal_num);
+		if(result == com.service.impl.AddressServiceImpl.SUCCESS){
+			lists2 = addressService.findAddressById(deal_num);
+			Gson gson = new Gson();
+			System.out.println("lists2:"+gson.toJson(lists2));//查看json格式			
+			return "findAddressSuccess";
+		}else if(result == com.service.impl.AddressServiceImpl.FAIL){
+			inputStream = new ByteArrayInputStream("findAddressFail"  
+                    .getBytes("UTF-8")); 
+			System.out.println("查询地址失败，没有此地址");
+			return "findAddressFail";
+		}
+		return null;
+    	
+    }
+    
+    public String findAll2() {
+        System.out.println("控制器方法启动");
+        // 使用struts2的servlet接口，接收request里的参数
+        // 商品名字参数
+        HttpServletRequest request = ServletActionContext.getRequest();
+        String username = request.getParameter("username");
+       
+        String time = request.getParameter("time");
+
+
+        // 校验pageNum参数输入合法性
+        String pageNumStr = request.getParameter("pageNum");
+        System.out.println("前端给的pageNum是："+pageNumStr);
+
+        int pageNum = 1; // 默认显示第几页数据
+        if (pageNumStr != null && !"".equals(pageNumStr.trim())) {
+            pageNum = Integer.parseInt(pageNumStr);
+        }
+
+        int pageSize = 5; // 默认每页显示多少条记录
+        String pageSizeStr = request.getParameter("pageSize");
+        if (pageSizeStr != null && !"".equals(pageSizeStr.trim())) {
+            pageSize = Integer.parseInt(pageSizeStr);
+        }
+
+        // 组装模糊查询条件
+        Purchase searchModel = new Purchase();
+        searchModel.setUsername(username);
+        searchModel.setTime(time);
+        System.out.println("==============Product对象==============");
+        System.out.println(searchModel);
+        // 调用service 获取查询结果
+        Pager<Purchase> result = purchaseService.findByPage2(searchModel, pageNum, pageSize);
+
+        // 将pageBean存入值栈，供前端页面读取        
+        ActionContext.getContext().getValueStack().push(result);
+        // 将查询条件也压回值栈，在初始化函数中为其初始化
+        ActionContext.getContext().getValueStack().push(searchModel);
+        System.out.println("==============Pager对象==============");
+        System.out.println(result);
+        System.out.println("控制器方法完成");
+        HttpServletRequest request2 = ServletActionContext.getRequest();
+    	request2.setAttribute("public_name",ManagerAction.public_name);
+        return "findAll3";
+    }
+    
 }

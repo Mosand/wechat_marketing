@@ -18,4 +18,11 @@ public interface AddressService {
 	String update(int id, String region, String tel, String name, String address);
 
 	String delete(int addressID);
+
+	String findAddress2(String deal_num);
+
+	List<Address> findAddressById(String deal_num);
+	
+	
+	//List<Address> findOneAddress2(String id1);//根据id1和是否首选，查询addressID
 }

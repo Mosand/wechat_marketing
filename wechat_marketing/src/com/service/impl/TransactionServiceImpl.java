@@ -23,16 +23,15 @@ public class TransactionServiceImpl implements TransactionService{
 
 
 	@Override
-	public String saveTransaction(String id1, String username, int goods_id, float ticheng, float market_price,
-			float reward, float admin, String serial_num, String time,String direction,String avatar_url,String goods_name) {
+	public String saveTransaction(String id1, String username, int goods_id, float money, String serial_num, String time,String direction,String avatar_url,String goods_name) {
 		// TODO Auto-generated method stub
-		String result = transactionDao.saveTransaction(id1,username,goods_id,ticheng,market_price,reward,admin,serial_num,time,direction,avatar_url,goods_name);
+		String result = transactionDao.saveTransaction(id1,username,goods_id,money,serial_num,time,direction,avatar_url,goods_name);
 		if(result.equals("success")){
 			return SUCCESS;
 		}else if(result.equals("fail")){
 			return FAIL;
 		}
-			return null;
+			return FAIL;
 	}
 	
 	@Override

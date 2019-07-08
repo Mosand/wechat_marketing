@@ -390,15 +390,21 @@ public List<Purchase> findNextDeal7(String id1,String id7){//通过id7来找直接线下
 	public String saveInfo(String id1, String username, String avatar_url) {
 		Session se =this.getSession();
 		String hql="";
-		hql = "insert into user_info(id1,username,avatar_url) values(?,?,?)";
-		Query query= se.createSQLQuery(hql);
-		query.setString(0, id1);
-		query.setString(1, username);
-		query.setString(2, avatar_url);
-		if(query.executeUpdate() == 1){
-			return "success";
-		}else
+		List<UserInfo> list = this.findUserById1(id1);
+		if(list == null){
+			hql = "insert into user_info(id1,username,avatar_url) values(?,?,?)";
+			Query query= se.createSQLQuery(hql);
+			query.setString(0, id1);
+			query.setString(1, username);
+			query.setString(2, avatar_url);
+			if(query.executeUpdate() == 1){
+				return "success";
+		}
+				return "fail";
+		}else{
 			return "fail";
+		}
+		
 	}
 
 	@Override

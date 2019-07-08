@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
@@ -16,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.entity.GoodsInfo;
 import com.entity.TGF;
 import com.google.gson.Gson;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.service.GoodsService;
 import com.service.TgfService;
@@ -273,6 +276,13 @@ public class GoodsAction extends ActionSupport{
 			lists = goodsService.findGoods();
 			Gson gson = new Gson();
 			System.out.println("lists:"+gson.toJson(lists));//查看json格式
+//			HttpServletRequest request = ServletActionContext.getRequest();
+//        	String mananame = request.getParameter("mananame");
+//        	ActionContext.getContext().put("user_name", mananame);
+//        	System.out.println("action.searchGoods user_name:"+mananame);
+			HttpServletRequest request = ServletActionContext.getRequest();
+        	request.setAttribute("public_name",ManagerAction.public_name);
+        	System.out.println("public_name:"+ManagerAction.public_name);
 			return "findSuccess";
 		}else if(result.equals(com.service.impl.GoodsServiceImpl.FAIL)){
 			inputStream = new ByteArrayInputStream("fail"  
@@ -292,6 +302,7 @@ public class GoodsAction extends ActionSupport{
     	String path="/goods_image";
 	    String target=ServletActionContext.getServletContext().getRealPath(path);
 	    if(file1FileName != null){	    	
+	    	System.out.println("file1FileName:"+file1FileName);
 	    	GoodsInfo goodsInfo = new GoodsInfo();
 	    	String prefix=file1FileName.substring(file1FileName.lastIndexOf(".")+1);//获取图片后缀
 	    	String goodsid = String.valueOf(goods_id);	    	
@@ -483,5 +494,12 @@ public class GoodsAction extends ActionSupport{
 		return null;
     }
     
-	
+	public String mainPublicName(){
+		
+		HttpServletRequest request2 = ServletActionContext.getRequest();
+    	request2.setAttribute("public_name",ManagerAction.public_name);
+		
+		return "mainPublicName";
+		
+	}
 }

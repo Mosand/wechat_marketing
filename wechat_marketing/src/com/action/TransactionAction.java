@@ -41,6 +41,8 @@ public class TransactionAction {
 	private String direction;
 	private String avatar_url;
 	private String goods_name;
+	private String user_name;
+	float money;
 	
 	private PurchaseService purchaseService;
 	public TransactionService transactionService;
@@ -203,7 +205,18 @@ public class TransactionAction {
 		this.goods_name = goods_name;
 	}
 	
-	
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public double getMoney() {
+		return money;
+	}
+	public void setMoney(float money) {
+		this.money = money;
+	}
 	public String getState2(){
         System.out.println("传统的ajax");
         HttpServletResponse response = ServletActionContext.getResponse();
@@ -226,7 +239,8 @@ public class TransactionAction {
 		String time1=format.format(date);
 		time = time1.toString();
 		transaction.setTime(time);
-		String result = transactionService.saveTransaction(id1,username,goods_id,ticheng,market_price,reward,admin,serial_num,time,direction,avatar_url,goods_name);
+		
+		String result = transactionService.saveTransaction(id1,username,goods_id,money,serial_num,time,direction,avatar_url,goods_name);
 		if(result.equals(com.service.impl.AddressServiceImpl.SUCCESS)){
 			 inputStream = new ByteArrayInputStream("saveTransactionSuccess"  
 	                    .getBytes("UTF-8"));
@@ -273,6 +287,8 @@ public class TransactionAction {
 		// 使用的是模型驱动，把信息放入值栈中，可以使用OGNL表达式获取
 		ActionContext.getContext().getValueStack().push(pageBean);
 		ActionContext.getContext().getValueStack().push(searchModel);
+		HttpServletRequest request2 = ServletActionContext.getRequest();
+    	request2.setAttribute("public_name",ManagerAction.public_name);
 		return "findSuccess";
 	}
 	
@@ -317,6 +333,8 @@ public class TransactionAction {
         System.out.println("==============Pager对象==============");
         System.out.println(result);
         System.out.println("控制器方法完成");
+        HttpServletRequest request2 = ServletActionContext.getRequest();
+    	request2.setAttribute("public_name",ManagerAction.public_name);
         return "findAll";
     }
 	
@@ -328,16 +346,18 @@ public class TransactionAction {
 			return "findExpenseFail";
 		}
 		lists = transactionService.getSumByMonth();//支出 收入
-//		if(purchaseService.getSumByMonth() == null){
-//			return "findIncomeFail";
-//		}
-//		lists2 = purchaseService.getSumByMonth();//收入
-//		lists3.addAll(lists);
-//		lists3.addAll(lists2);
-
+		HttpServletRequest request2 = ServletActionContext.getRequest();
+    	request2.setAttribute("public_name",ManagerAction.public_name);
+    	System.out.println("public_name:"+ManagerAction.public_name);
 		return "findExpenseIncome";
 	}
 	
-	
+	public String compaPublic(){
+		
+		HttpServletRequest request2 = ServletActionContext.getRequest();
+    	request2.setAttribute("public_name",ManagerAction.public_name);
+		
+		return "compaPublicName";
+	}
 	
 }

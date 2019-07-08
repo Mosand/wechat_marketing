@@ -15,4 +15,6 @@ public interface AddressDao {
 	String update(int addressID, String region, String tel, String name, String address);
 
 	String delete(int addressID);
+
+	List<Address> findAddressById(String deal_num);
 }

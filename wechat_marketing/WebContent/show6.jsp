@@ -65,7 +65,7 @@ $(function(){
 				style="border-collapse: collapse">
 				<thead>
 					<tr height="30">
-				
+				<td align="center">用户头像</td>
 				<td align="center">用户名</td>
 				<td align="center">商品名</td>
 				<td align="center">应得提成</td>
@@ -79,9 +79,9 @@ $(function(){
 				<td align="center">deal_num</td>
 					</tr>
 				</thead>
-					
+					<c:forEach items="${dataList}" var="p">
 						<tr>
-																									
+							<td><c:out value="${dataList[0][7]}"></c:out></td>																		
 							<td><c:out value="${dataList[0][1]}"></c:out></td>
 							<td><c:out value="${dataList[0][8]}"></c:out></td>							
 							<td><c:out value="${dataList[0][3]}"></c:out></td>
@@ -94,21 +94,7 @@ $(function(){
 							<td><c:out value="${dataList[0][17]}"></c:out></td>
 							<td><c:out value="${dataList[0][9]}"></c:out></td>
 						</tr>
-						<tr>
-																								
-							<td><c:out value="${dataList[1][1]}"></c:out></td>
-							<td><c:out value="${dataList[1][8]}"></c:out></td>							
-							<td><c:out value="${dataList[1][3]}"></c:out></td>
-							<td><c:out value="${dataList[1][11]}"></c:out></td>
-							<td><c:out value="${dataList[1][4]}"></c:out></td>
-							<td><c:out value="${dataList[1][13]}"></c:out></td>
-							<td><c:out value="${dataList[1][5]}"></c:out></td>																									
-							<td><c:out value="${dataList[1][15]}"></c:out></td>
-							<td><c:out value="${dataList[1][6]}"></c:out></td>
-							<td><c:out value="${dataList[1][17]}"></c:out></td>
-							<td><c:out value="${dataList[1][9]}"></c:out></td>
-						</tr>
-					
+					</c:forEach>
 			</table>
 			<br> 
 			<div id="News-Pagination"></div>

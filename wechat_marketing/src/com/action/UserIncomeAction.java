@@ -22,6 +22,7 @@ import com.entity.UserInfo;
 import com.google.gson.Gson;
 import com.opensymphony.xwork2.ActionContext;
 import com.service.GoodsService;
+import com.service.PurchaseService;
 import com.service.UserIncomeService;
 import com.service.UserService;
 
@@ -39,10 +40,12 @@ public class UserIncomeAction {
 	private String deal_num;
 	private String avatar_url;
 	private String goods_name;
+	private String user_name;
 	
 	private UserIncomeService userIncomeService;
 	private GoodsService goodsService;
 	private UserService userService;
+	private PurchaseService purchaseService;
 	
 	private List<GoodsInfo> lists = new ArrayList<GoodsInfo>();
 	private List<UserInfo> lists2 = new ArrayList<UserInfo>();
@@ -131,8 +134,17 @@ public class UserIncomeAction {
 		return goodsService;
 	}
 
+	
 	public void setGoodsService(GoodsService goodsService) {
 		this.goodsService = goodsService;
+	}
+
+	public PurchaseService getPurchaseService() {
+		return purchaseService;
+	}
+
+	public void setPurchaseService(PurchaseService purchaseService) {
+		this.purchaseService = purchaseService;
 	}
 
 	public UserService getUserService() {
@@ -165,6 +177,14 @@ public class UserIncomeAction {
 
 	public void setLists3(List<Object> lists3) {
 		this.lists3 = lists3;
+	}
+
+	public String getUser_name() {
+		return user_name;
+	}
+
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
 	public String getUsername() {
@@ -215,7 +235,7 @@ public class UserIncomeAction {
 	public String saveUserIncome() throws UnsupportedEncodingException{
 		
 		System.out.println("action.saveIncome方法执行");
-		String result = userIncomeService.saveUserIncome(id1,goods_id,ticheng,market_price,reward,admin,username,deal_num,avatar_url,goods_name);//这些都要计算 现在还没计算在Dao里进行计算
+		String result = userIncomeService.saveUserIncome(id1,goods_id,ticheng,market_price,reward,admin,username,deal_num,avatar_url,goods_name);
 		if(result == com.service.impl.UserIncomeServiceImpl.SUCCESS){
 			inputStream = new ByteArrayInputStream("saveUSuccess"  
                     .getBytes("UTF-8")); 
@@ -233,18 +253,22 @@ public class UserIncomeAction {
 	public String findErweima() throws UnsupportedEncodingException{
 		System.out.println("action.findErweima方法执行");
 		
-		String result = userService.findErweima(deal_num);//从user_info表里查erweima,username和avatar_url			
+		String result = userService.findErweima(id1);//从user_info表里查erweima,username和avatar_url			
 		//从goods_info表里查goods_name
 		if(result == com.service.impl.UserServiceImpl.SUCCESS){
+			//w我返回给前端的数据，这些内容都有
+			System.out.println("goods_id:"+goods_id);
 			String result2 = goodsService.searchItem(goods_id);
+			System.out.println("id1:"+id1);
 			lists2 = userService.searchErweima(id1);			
 			System.out.println("查询 二维码成功");
 			if(result2.equals(com.service.impl.GoodsServiceImpl.SUCCESS)){//search success
 				lists = goodsService.findItem(goods_id);
 				Gson gson = new Gson();
-				System.out.println("lists2:"+gson.toJson(lists2));//查看json格式
+				//查看json格式
 				lists3.addAll(lists2);
 				lists3.addAll(lists);//将查询的数据，userinfo 的list2 和goods_info 的list 合并传入前端
+				System.out.println("lists3:"+gson.toJson(lists3));
 				return "findErSuccess";
 			}else if(result2.equals(com.service.impl.GoodsServiceImpl.FAIL)){
 				inputStream = new ByteArrayInputStream("fail"  
@@ -332,6 +356,8 @@ public class UserIncomeAction {
 		        System.out.println(result);
 		        System.out.println("username:"+username);
 		        System.out.println("控制器方法完成");
+		        HttpServletRequest request2 = ServletActionContext.getRequest();
+	        	request2.setAttribute("public_name",ManagerAction.public_name);
 		        return "findAll";
 		    }	
 	

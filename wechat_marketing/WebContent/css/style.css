@@ -1,10 +1,17 @@
 /*normal*/
 .clear{ clear:both}
 
+.tip { display: none; 
+	position: absolute; 
+	left: 20px; 
+	top: 52px; 
+	font-size: 14px; 
+	color: #f50; 
+}
 
 /*header*/
 .login_icon{
-    background: #e0e0e0 url(../img/header.jpg) repeat-x fixed top;
+    background: #e0e0e0 url(../img/header.png) repeat-x fixed top;
     width: 100%;
     height: 50px;
 }
@@ -18,7 +25,7 @@
 .leftnav{
     width: 164px;
     margin-top:25px;
-    background: #e0e0e0 url(../img/header.jpg) repeat fixed top;	
+    background: #e0e0e0 url(../img/header.png) repeat fixed top;	
 	color:#333; 
 border-radius: 4px; 	   
 }
@@ -40,6 +47,7 @@ border-radius: 4px;
     left: 200px;
     width: 1120px;
     border: 1px #f8f8f8 solid;
+    margin-bottom:30px;
 }
 
 /*details*/
@@ -67,18 +75,18 @@ border-radius: 4px;
 }
 
 /*product_item_modal*/
-.user_img{
+.product_img,.userimg{
 	position:relative;
 	width: 200px;
     margin: 0 auto;
 }
 
-.user_img img{
+.product_img img{
 	width:200px;
 	height:200px;
 }
 
-.user_img input{
+.product_img input{
 	position:absolute;
 	opacity:0;
 	top:0px;
@@ -92,17 +100,8 @@ border-radius: 4px;
     margin: 0 auto;
 }
 
-.user_img{
-	position:relative;
-}
-
 /*user_mana*/
 /*expenditure*/
-.userimg{
-	width:24px;
-	height:24px;
-}
-
 .viewimg{
 	margin-right: 20px;
 }
@@ -125,20 +124,6 @@ border-radius: 4px;
     border-radius: 4px;
     border: 1px solid #ccc;
     padding: 5px;    
-}
-
-
-/*compa_table*/
-/*tables*/
-.revenue_detail{
-	float: right;
-    font-size: 14px;
-    padding-top: 40px;
-}
-
-.text_ad{
-	padding-right:20px;
-	color: #ff7575;	
 }
 
 /*echarts*/

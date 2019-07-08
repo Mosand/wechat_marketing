@@ -6,6 +6,9 @@ import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.entity.Manager;
@@ -20,6 +23,7 @@ public class ManagerAction extends ActionSupport implements SessionAware{
 	private InputStream inputStream;
 	private String securityCode;
 	private Map<String, Object> session;
+	public static String public_name;
 	
 	private ManagerService managerService;
 
@@ -71,6 +75,14 @@ public class ManagerAction extends ActionSupport implements SessionAware{
 		this.securityCode = securityCode;
 	}
 	
+//	public static String getPublic_name() {
+//		return public_name;
+//	}
+//
+//	public static void setPublic_name(String public_name) {
+//		ManagerAction.public_name = public_name;
+//	}
+
 	public String login() throws UnsupportedEncodingException{
 		System.out.println("action.login·½·¨Ö´ÐÐ");
 		
@@ -95,8 +107,14 @@ public class ManagerAction extends ActionSupport implements SessionAware{
         	return "WrongUser";
 
         }
-        	Manager mana = new Manager();
-        	ActionContext.getContext().put("user_name", mana.getMananame());
+        
+        	
+        	HttpServletRequest request = ServletActionContext.getRequest();
+        	public_name = mananame;
+        	request.setAttribute("public_name",public_name);
+        	//ActionContext.getContext().put("user_name", mananame);
+        	
+        	System.out.println("user_name:"+mananame);
 			return "RightUser";
 			
 	}

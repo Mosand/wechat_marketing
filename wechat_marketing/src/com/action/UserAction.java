@@ -42,6 +42,7 @@ public class UserAction {
 	private InputStream inputStream;
 
 	private File file1;
+	
 	//当前上传的文件名
 	private String file1FileName;
 	//文件类型(MIME)
@@ -219,6 +220,7 @@ public class UserAction {
 		
 		System.out.println("action.saveErweima方法执行");
 		String path="/erweima_image";
+		System.out.println("file1FileName:"+file1FileName);
 	    String target=ServletActionContext.getServletContext().getRealPath(path);
 	    if(file1FileName != null){	    	
 	    	UserInfo userInfo = new UserInfo();

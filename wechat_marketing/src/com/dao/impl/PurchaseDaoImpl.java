@@ -483,7 +483,7 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 			return this.findByPage3(pageNum, pageSize);
         }
         if((time == null || time.equals("")) && (username !=null || !username.equals(""))){
-			hql = new StringBuilder("from purchase where username =:username ");
+			hql = new StringBuilder("from purchase where username =:username order by time desc");
 			countHql = new StringBuilder("select count(*) from purchase where username =:username");			
 			paramMap.put("username", username);
 			// 起始索引
@@ -532,7 +532,7 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 			
 		}
 		if((username == null || username.equals("")) && (time != null || !time.equals(""))){
-			hql = new StringBuilder("from purchase where time like :time");
+			hql = new StringBuilder("from purchase where time like :time order by time desc");
 			countHql = new StringBuilder("select count(*) from purchase where time like :time");
 			paramMap.put("time", time + "%");
 			// 起始索引
@@ -580,7 +580,7 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 			return result;
 		}
 		else if (time != null && !time.equals("") && username != null && !username.equals("")) {
-			hql = new StringBuilder("from purchase where time like :time and username =:username ");
+			hql = new StringBuilder("from purchase where time like :time and username =:username order by time desc");
 			countHql = new StringBuilder("select count(*) from purchase where time like :time and username =:username");
 			paramMap.put("time", time + "%");
 			paramMap.put("username",username);
@@ -651,7 +651,7 @@ public class PurchaseDaoImpl extends HibernateDaoSupport implements PurchaseDao{
 	public Pager<Purchase> findByPage3(int pageNum, int pageSize) {
 		// TODO Auto-generated method stub
 		StringBuilder hql = new StringBuilder();
-		hql = new StringBuilder("from purchase");
+		hql = new StringBuilder("from purchase order by time desc");
 		
 		// 起始索引
 		int fromIndex = pageSize * (pageNum - 1);

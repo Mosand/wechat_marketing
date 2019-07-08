@@ -13,7 +13,7 @@ public interface UserService {
 	
 	String saveErweima(String id1,String erweima,String erweimaFormat);
 
-	String findErweima(String deal_num);
+	String findErweima(String id1);
 	
 	List<UserInfo> searchErweima(String id1);
 

@@ -13,7 +13,7 @@
      文件：<input type="file" name="file1"/><br/>
      	  
 
-          <input type = "hidden" name="id1" value="as" ><input type="submit" value="上传文件">
+          <input type = "hidden" name="id1" value="1a1" ><input type="submit" value="上传文件">
           
  </form>
  

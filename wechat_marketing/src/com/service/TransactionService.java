@@ -8,8 +8,7 @@ import com.entity.TransactionRecord;
 
 public interface TransactionService {
 
-	String saveTransaction(String id1, String username, int goods_id, float ticheng, float market_price, float reward,
-			float admin, String serial_num, String time,String direction,String avatar_url,String goods_name);
+	String saveTransaction(String id1, String username, int goods_id, float money, String serial_num, String time,String direction,String avatar_url,String goods_name);
 	
 	PageBean<Object> findTransaction(Integer currPage);
 

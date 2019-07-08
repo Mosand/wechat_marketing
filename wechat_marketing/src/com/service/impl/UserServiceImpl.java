@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public String findErweima(String deal_num) {//根据deal_num来获取购买者的id1，来查询用户的二维码
-		List<UserInfo> userlist = userDao.findErweima(userDao.findOneDeal(deal_num).get(0).getId1());
+	public String findErweima(String id1) {//根据deal_num来获取购买者的id1，来查询用户的二维码
+		List<UserInfo> userlist = userDao.findErweima(id1);
 		if(userlist == null){
 			return FAIL;
 		}else 

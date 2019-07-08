@@ -1,5 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%
 	String path = request.getContextPath();
 	String webContent = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
@@ -21,6 +23,7 @@ div{top:4px;!important}
 <link rel="stylesheet" href="${webContent}css/default/bootstrap-3.3.7.min.css">
 <link rel="stylesheet" href="${webContent}css/default/bootstrap-datetimepicker.css">
 <link rel="stylesheet" href="${webContent}css/style.css">
+<link rel="stylesheet" href="${webContent}css/pagination.css"/>
 
 <script src="${webContent}jquery/jquery-1.11.2.min.js"></script>
 <script src="${webContent}jquery/jquery.form.js"></script>
@@ -29,10 +32,10 @@ div{top:4px;!important}
 <body> 
 
 <!-- 登录接口 -->
-<!-- <%=request.getAttribute("user_id")%> <%=request.getAttribute("user_name")%>-->
+
 <div class="login_icon">
       <ul class="nav navbar-nav navbar-right"> 
-          <li><a href="${webContent}pages/userIndex.jsp"><img src="${webContent}img/icon/main_man.png" />&nbsp;&nbsp;<%=request.getAttribute("user_name")%></a></li>
+          <li><a href="${webContent}pages/login.jsp"><img src="${webContent}img/icon/main_man.png" />&nbsp;&nbsp;<%=request.getAttribute("public_name")%></a></li>
       </ul> 
 </div>
 <div class="clear"></div>
@@ -40,31 +43,59 @@ div{top:4px;!important}
 
 <div class="leftnav">
 	<ul class="nav nav-pills nav-stacked">
-	  <li><a href="${webContent}pages/main.jsp">产品管理</a></li>
-	  <li><a href="#">用户管理</a></li>
-	  <li class="selected"><a href="#" style="color: #333;">公司报表</a></li>
+	  <li><a href="goods_mainPublicName">产品管理</a></li>
+	  <li><a href="userincome_findAll">用户管理</a></li>
+	  <li class="selected"><a href="transaction_compaPublic" style="color: #333;">公司报表</a></li>
 	</ul>
 </div>
 <!--end leftnav-->
+
+
+<script type="text/javascript" src="${webContent}js/jquery.pagination.js"></script>
+<script type="text/javascript">
+// 点击分页按钮以后触发的动作
+function handlePaginationClick(new_page_index, pagination_container) {
+	$("#proForm").attr("action", "<%=path %>/transaction_findAll.action?pageNum=" + (new_page_index +1));
+	$("#proForm").submit();
+	return false;
+}
+
+//初始化函数
+$(function(){
+	$("#News-Pagination").pagination(${totalRecord}, {
+        items_per_page:${pageSize}, // 每页显示多少条记录
+        current_page:${currentPage} - 1, // 当前显示第几页数据
+        num_display_entries:2, // 连续分页主体显示的条目数
+        next_text:"下一页",
+        prev_text:"上一页",
+        num_edge_entries:2, // 连接分页主体，显示的条目数
+        callback:handlePaginationClick, //执行的回调函数，也就是去获取新的分页数据
+        load_first_page:false //防止页面一直刷新( 这条非常重要！)        
+	});	
+	// 初始化时就获得后台发过来的前一次的查询参数
+	$("#username").val("${username}");	
+	$("#datetime").val("${datetime}");	
+});
+</script>
 
 <div class="panelfix">
 
 	<ul class="nav nav-tabs">
 	    <li>
-	        <a href="${webContent}pages/compa_table_1.jsp">
+	        <a href="transaction_compaPublic">
 	           公司报表
 	        </a>
 	    </li>
-	    <li><a href="${webContent}pages/compa_table_2.jsp">商品详情</a></li>
-	    <li class="active"><a href="#">用户详情</a></li>	    
+	    <li><a href="purchase_findAll2">收入详情</a></li>
+	    <li class="active"><a href="#">支出详情</a></li>	    
 	
 	</ul>	
 
     <div class="tab-pane fade in active product_expenditure">
-		    <form action="#" method="post" class="navbar-form navbar-left" id="ur_table">
+   		<form action="<%=path%>/transaction_findAll.action" id="proForm" method="post" class="navbar-form navbar-left"> 
 		      <div class="form-group">
 		      	  <span>用户名称</span>
-		          <input type="text" class="form-control" name="username">
+		          <input type="text" class="form-control" name="username" id="username">
 		      </div>
 		      
 		      <div class="form-group">
@@ -72,66 +103,39 @@ div{top:4px;!important}
 		         <input class="datetime" type="text" id="datetime" readonly class="form_datetime form-control" name="time" />
 		      </div>		      
 		      <button type="submit" class="btn btn-default" >查询</button>
-		    </form>	    
-		    
-		    <div class="revenue_detail">
-		        <span>收入：</span>
-		        <span id="ur_in" class="text_ad">23</span>
-		        <span>支出：</span>
-		        <span id="ur_out" class="text_ad">25</span>			        
-		    </div>			    
-		    
+		    </form>	    		    			    
+
+	<c:if test="${fn:length(dataList) gt 0 }"> 		    
 			<table class="table table-hover">
 			  <thead>
-				<tr>
-					<th>用户头像</th>						
+				<tr>					
 					<th>用户名称</th>						
 					<th>商品</th>
 					<th>去向</th>
-					<th>总价</th>
+					<th>价格</th>
 					<th>时间</th>																
 				</tr>
 			  </thead>
-			  <tbody id="uspend_list">
-				<s:iterator value="list" var="d">
-					<tr>
-						<td><s:property value="#d.avatar_url" /></td>
-						<td><s:property value="#d.username" /></td>
-					<!-- 后台通过id1查 -->
-						<td><s:property value="#d.goods_name" /></td>							
-						<td><s:property value="#d.direction" /></td>						
-						<td><s:property value="#d.total" /></td>
-<!-- 后台数据库添加“direction”字段 -->						
-						<td><s:property value="#d.time" /></td>								
+			<tbody>
+				<c:forEach items="${dataList}" var="p">
+					<tr>						
+						<td><c:out value="${p.username }"></c:out></td>
+						<td><c:out value="${p.goods_name }"></c:out></td>
+						<td><c:out value="${p.direction }"></c:out></td>												
+<c:if test="${p.direction=='提成费'}"><td><c:out value="${p.ticheng}"></c:out></td>	</c:if>	
+<c:if test="${p.direction=='市场费'}"><td><c:out value="${p.market_price}"></c:out></td>	</c:if>		
+<c:if test="${p.direction=='奖金'}"><td><c:out value="${p.reward}"></c:out></td>	</c:if>	
+<c:if test="${p.direction=='admin奖金'}"><td><c:out value="${p.admin}"></c:out></td>	</c:if>				
+						<td><c:out value="${p.time }"></c:out></td>												
 					</tr>
-				</s:iterator>								  				  				  
-			  </tbody>
-			</table>	
-<br/>
-			<table>
-				<tr>
-					<td>
-					<span>
-				     第<s:property value="currPage" />/<s:property value="totalPage" />页
-				</span>
-				&nbsp;&nbsp; 
-				<span>
-				    总记录数：<s:property value="totalCount" />&nbsp;&nbsp;
-				    每页显示:<s:property value="pageSize" /></span>&nbsp;&nbsp; 
-				<span>
-				   <s:if test="currPage != 1">
-						<a href="#.action?currPage=1">[首页]</a>&nbsp;&nbsp;
-	                    <a href="#.action?currPage=<s:property value="currPage-1"/>">[上一页]</a>&nbsp;&nbsp;
-	               </s:if> 
-	               <s:if test="currPage != totalPage">
-						<a href="#.action?currPage=<s:property value="currPage+1"/>">[下一页]</a>&nbsp;&nbsp;
-	                    <a href="#?currPage=<s:property value="totalPage"/>">[尾页]<s:property value="totalPage"/></a>&nbsp;&nbsp;
-	               </s:if> 
-	            </span>
-	            </td>
-			</tr>
-		</table>			
-    </div>
+				</c:forEach>
+			</tbody>	
+		</table>
+<br/> 
+			<div id="News-Pagination"></div>
+    </c:if>	
+    		
+   </div>
 	
 </div>
 <!-- end main_panel-->

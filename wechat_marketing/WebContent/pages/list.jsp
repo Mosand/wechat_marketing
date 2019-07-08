@@ -1,94 +1,68 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String path = request.getContextPath();
+	String webContent = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+	request.setAttribute("webContent", webContent);
+%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style type="text/css">
-.table1 {
-	border: 1px solid #ddd;
-	width: 900px;
-}
+<title>多级分销系统</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="product" />
+<link href="${webContent}css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="${webContent}css/default/bootstrap-3.3.7.min.css">
+<link rel="stylesheet" href="${webContent}css/default/bootstrap-datetimepicker.css">
+<link rel="stylesheet" href="${webContent}css/style.css">
 
-thead {
-	background-color: lightblue;
-}
-</style>
+<script src="${webContent}jquery/jquery-1.11.2.min.js"></script>
+<script src="${webContent}jquery/jquery.form.js"></script>
+<script src="${webContent}jquery/bootstrap-3.3.7.min.js"></script>
 </head>
-<%
-	// 获取请求的上下文
-	String context = request.getContextPath();
-%>
-<link href="${pageContext.request.contextPath}/css/pagination.css" rel="stylesheet" type="text/css"/>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.11.3.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.pagination.js"></script>
-<script type="text/javascript">
-// 点击分页按钮以后触发的动作
-function handlePaginationClick(new_page_index, pagination_container) {
-	$("#proForm").attr("action", "<%=context %>/product_findAll.action?pageNum=" + (new_page_index +1));
-	$("#proForm").submit();
-	return false;
-}
-
-</script>
 <body>     
-	<table border="0" width="900px">
-		<tr>
-			<td align="center" style="font-size: 24px; color: #666">部门管理</td>
-		</tr>
-		<tr>
-			<td align="right">
-			    <a href="department_goAddDepartment.action">添加</a>
-			</td>
-		</tr>
-	</table>
-	<br/>
-	<table cellspacing="0" border="1" class="table1">
-		<thead>
-			<tr>
-				<th width="300">部门名称</th>
-				<th width="300">编辑</th>
-				<th width="300">删除</th>
-			</tr>
-		</thead>
-		<tbody>
-			<s:iterator value="list" var="d">
-				<tr>
-					<td align="center"><s:property value="#d.username" /></td>
-					<td align="center"><s:property value="#d.direction" /></td>
-					<td align="center"><s:property value="#d.goods_name" /></td>
-					<td align="center"><s:property value="#d.totalticheng" /></td>
-					<td align="center"><s:property value="#d.totalmarket_price" /></td>
-				</tr>
-			</s:iterator>
-		</tbody>
-	</table>
-	<br/>
-	<table border="0" cellspacing="0" cellpadding="0" width="900px">
-		<tr>
-			<td align="right">
-			<span>
-			     第<s:property value="currPage" />/<s:property value="totalPage" />页
-			</span>
-			&nbsp;&nbsp; 
-			<span>
-			    总记录数：<s:property value="totalCount" />&nbsp;&nbsp;
-			    每页显示:<s:property value="pageSize" /></span>&nbsp;&nbsp; 
-			<span>
-			   <s:if test="currPage != 1">
-					<a href="transaction_findTransactionByNameandTime.action?currPage=1">[首页]</a>&nbsp;&nbsp;
-                    <a href="transaction_findTransactionByNameandTime.action?currPage=<s:property value="currPage-1"/>">[上一页]</a>&nbsp;&nbsp;
-               </s:if> 
-               <s:if test="currPage != totalPage">
-					<a href="transaction_findTransactionByNameandTime.action?currPage=<s:property value="currPage+1"/>">[下一页]</a>&nbsp;&nbsp;
-                    <a href="transaction_findTransactionByNameandTime.action?currPage=<s:property value="totalPage"/>">[尾页]<s:property value="totalPage"/></a>&nbsp;&nbsp;
-               </s:if> 
-            </span>
-            </td>
-		</tr>
-	</table>
-	
-	
+<div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">用户地址详情</h4>
+            </div>
+            <div class="modal-body">
+			   <div class="user_img">
+				   <img id="preimg" src="${webContent}img/add_product.png" alt="erweima_img"/>
+				   <input id="newimg" type="file" name="file1" onchange="previewFile()" /> 　　　 　
+			   </div> 
+               <div class="form-group">
+                   <label for="">用户头像</label>
+				   <div class="user_img">		   
+					   <img id="avatar_url" src="${webContent}img/add_product.png" alt="user_img"/>　　　 　
+				   </div> 
+               </div>			     			   
+               <div class="form-group">
+                   <label for="">用户名称</label>
+                   <input class="form-control" type="text" placeholder="" name="username" id="username">
+               </div>		         
+               <div class="form-group">
+                   <label for="">商品</label>
+                   <input class="form-control" type="text" placeholder="" name="goods_name" id="goods_name">
+               </div> 
+               <div class="form-group">
+                   <label for="">交易类型</label>
+                   <input class="form-control" type="text" placeholder="" name="direction" id="direction">
+               </div>                
+               <div class="form-group">
+                   <label for="">交易金额</label>
+			   	   <textarea class="form-control" rows="1" id="spendtext"></textarea>
+               </div>                      
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

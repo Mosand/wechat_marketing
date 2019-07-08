@@ -76,6 +76,7 @@
 		<property name="userIncomeService" ref="userIncomeService"></property>
 		<property name="userService" ref="userService"></property>
 		<property name="goodsService" ref="goodsService"></property>
+		<property name="purchaseService" ref="purchaseService"></property>
 	</bean>
 	<bean id="transactionAction" class="com.action.TransactionAction" scope="prototype">
 		<property name="transactionService" ref="transactionService"></property>
