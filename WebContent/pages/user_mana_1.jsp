@@ -105,7 +105,7 @@ $(function(){
 					<th>已得奖金</th>						
 					<th>应得ADMIN</th>
 					<th>已得ADMIN</th>					
-					<th>查看详情</th>																				
+					<th>查看二维码</th>																				
 				</tr>
 			  </thead>
 			  

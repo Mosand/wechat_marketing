@@ -141,12 +141,25 @@ $(function(){
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">交易详情</h4>
+                <h4 class="modal-title" id="myModalLabel">地址详情</h4>
             </div>
             <div class="modal-body">
-			  <div class="form-group">
-			    <textarea class="form-control" rows="3" id="addresstext"></textarea>
-			  </div>          
+               <div class="form-group">
+                   <label for="">姓名</label>
+                   <input class="form-control" type="text" placeholder="" name="" id="dname">
+               </div>
+               <div class="form-group">
+                   <label for="">电话</label>
+                   <input class="form-control" type="text" placeholder="" name="" id="tel">
+               </div>
+               <div class="form-group">
+                   <label for="">地区</label>
+                   <input class="form-control" type="text" placeholder="" name="" id="region">
+               </div>     
+               <div class="form-group">
+                   <label for="">详细地址</label>
+                   <input class="form-control" type="text" placeholder="" name="" id="addresstext">
+               </div>                          	         
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -166,12 +179,11 @@ $("#datetime").datetimepicker({
 
 function viewAddress(deal_num){
 	$.post("purchase_findAddress?deal_num="+ deal_num,function(address) {
-        $("#addresstext").html("");			
-		if(address.length != 0) {
-			for (var i = 0; i < address.length; i++) {
-		        $("#addresstext").append(address[i].address+";");
-			}
-		}        
+    	$('#addresstext').attr("value",address[0].address);
+    	$('#dname').attr("value",address[0].name);
+    	$('#tel').attr("value",address[0].tel);	
+    	$('#region').attr("value",address[0].region);	
+    	
 		$("#address_content").modal("show");		
 	});
 }

@@ -37,6 +37,7 @@ public class GoodsDaoImpl extends HibernateDaoSupport implements GoodsDao{
 		
 		Session se =this.getSession();
 		String hql="";
+		//防止脏数据，防止数据更新不同步
 		String hql2 = "SELECT u.goods_name,t.goods_name,p.goods_name from user_income u,transaction_record t,purchase p WHERE u.goods_id = ? and t.goods_id=? and p.goods_id = ?";
 		Query query2= se.createSQLQuery(hql2);
 		query2.setInteger(0, goods_id);

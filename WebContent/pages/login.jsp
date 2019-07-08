@@ -54,19 +54,6 @@
 
 </head>
 <body>
-
-<script src="${webContent}jquery/jquery.form.js"></script> 
-<script type="text/javascript">
-$(document).ready(function() {  
-	
-	$('#registform').ajaxForm(function(item) 
-			{
-		 		if (item=="UsernameOrPasswordError"){alert("用户名或密码错误！");}
-		 		else(item=="codeError"){alert("验证码错误！");}	
-			})
-	})
-
-</script>
 <script type="text/javascript">
 
    window.onload=function(){
@@ -78,7 +65,8 @@ $(document).ready(function() {
     
 };
 </script>
-<form action="manager_login" id="registform" method="post" onsubmit="return isValid()">
+<a href="goods_mainPublicName" id="mainclick"></a>
+<form action="manager_login" id="registform" method="post">
 <div class="dowebok">
        <div class="logo"></div>
         <div class="form-item">
@@ -99,7 +87,18 @@ $(document).ready(function() {
         <div class="form-item"><button id="submit">登 录</button></div>
 </div>
 </form>
-    
-
+  
+<script src="${webContent}jquery/jquery.form.js"></script> 
+<script type="text/javascript">
+$(document).ready(function() {  
+	
+	$('#registform').ajaxForm(function(item) 
+			{
+		 		if (item=="UsernameOrPasswordError"){alert("用户名或密码错误！");}
+  		 		else if(item=="codeError"){alert("验证码错误！");}	
+		 		else{$('#mainclick')[0].click();}   
+			})
+	});
+</script>
 </body>
 </html>

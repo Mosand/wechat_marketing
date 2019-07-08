@@ -268,7 +268,10 @@
 		</action>
 		
 		<action name="manager_*" class="managerAction" method="{1}">
-			<result name="RightUser">/pages/main.jsp</result>
+			<result name="RightUser" type="stream">
+				<param name="contentType">text/html</param>
+				<param name="inputName">inputStream</param> 
+			</result>	
 			<result name="WrongUser" type="stream">
 				<param name="contentType">text/html</param>
 				<param name="inputName">inputStream</param> 

@@ -108,13 +108,14 @@ public class ManagerAction extends ActionSupport implements SessionAware{
 
         }
         
-        	
         	HttpServletRequest request = ServletActionContext.getRequest();
         	public_name = mananame;
         	request.setAttribute("public_name",public_name);
-        	//ActionContext.getContext().put("user_name", mananame);
         	
         	System.out.println("user_name:"+mananame);
+        	inputStream = new ByteArrayInputStream("rightUser"  
+                    .getBytes("UTF-8")); 
+  			System.out.println("right user");
 			return "RightUser";
 			
 	}

@@ -326,6 +326,7 @@ public class GoodsAction extends ActionSupport{
 			goodsInfo.setGoods_image(goods_image);
 			goodsInfo.setImgFormat(imgFormat);
 	    }
+	    System.out.println("admin_num:"+admin_num);
     	String result = goodsService.updateGoods(goods_id,goods_name,price,ticheng,reward,reward_num,admin,admin_num,goods_image,describe_goods,market_price,imgFormat);
     	String result2 = tgfService.updateTgf(goods_id,tuiguangfei,tuiguangfei1,tuiguangfei2,tuiguangfei3,tuiguangfei4,tuiguangfei5,tuiguangfei6);
 		if(result2.equals(com.service.impl.TgfServiceImpl.SUCCESS)){//search success

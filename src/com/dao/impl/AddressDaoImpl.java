@@ -59,7 +59,11 @@ public class AddressDaoImpl extends HibernateDaoSupport implements AddressDao{
 		//name = this.findUserById1(id1).get(0).getUsername();
 		Session se =this.getSession();
 		String hql="";
-		
+		region = region.replace("[", "");
+		region = region.replace("]", "");
+		region = region.replace(",", "");
+		region = region.replace("\"", "");
+		System.out.println("region:"+region);
 		hql = "insert into address(id1, region, tel, name, first_choice, address) values(?,?,?,?,?,?)";
 		Query query= se.createSQLQuery(hql);
 		query.setString(0, id1);

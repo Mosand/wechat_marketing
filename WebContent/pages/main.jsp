@@ -152,8 +152,7 @@ $(document).ready(function() {
 		else{alert(state);}
   });
     <!--update_product_response-->   
-         
-  
+
 });
 </script>
 
@@ -209,7 +208,7 @@ $(document).ready(function() {
                </div>
                <div class="form-group">
                    <label for="">ADMIN的达标线</label>
-                   <input class="form-control" type="text" placeholder="" name="admin_nunm" id="admin_num">
+                   <input class="form-control" type="text" placeholder="" name="admin_num" id="admin_num">
                </div>  
 				<div class="propagation">
 					<table class="table table-striped">
